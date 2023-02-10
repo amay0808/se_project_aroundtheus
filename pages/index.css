@@ -1,0 +1,23 @@
+.page{
+    background-color: black;
+    color: white;
+}
+.page__content{
+    margin-left: 200px;
+    margin-right: 200px;;
+}
+.header{
+    margin-top: 45px;
+}
+.profile{
+    display: flex;
+}
+.profile_info{
+    display: grid;
+    grid-template-areas:
+    "title button"
+    "description descritpion";
+}
+.profile_edit-button{
+    background: transparent url(../images/edit-button.svg) center no-repeat;
+}
