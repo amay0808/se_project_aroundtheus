@@ -14,7 +14,7 @@ list-style: none;
     font-size: 24px;
     line-height: 30px;
 }
-.card__list{
+.card__list-item{
 display: grid;
 justify-content: center;
 grid-template-columns: repeat( auto-fit, 282px);
