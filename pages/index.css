@@ -115,23 +115,22 @@ height: 18px;
 border: none;
 }
 @media screen and (max-width:480px){
-    .profile{
-        background-color: pink;
-        flex-direction: column;
+    .profile{   
+        flex-direction: column;     
         justify-content: center;
         align-items: center;
     }
     .profile__info{
         display: flex;
         flex-wrap: wrap ;
-        width: 100;
+        width: 100px;
     }
-}
 .profile__description{
-    width: 100%;
     text-align: center;
-}
-.profile__description{
-    margin: 0;
     width: 100%;
+}
+.profile__add-button{
+    margin: 0; 
+    width: 100%;
+}
 }
