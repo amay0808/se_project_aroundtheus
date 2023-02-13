@@ -52,7 +52,7 @@
 }
 @media screen and (max-width:480px){
     .profile{   
-        flex-direction: column; 
+        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
