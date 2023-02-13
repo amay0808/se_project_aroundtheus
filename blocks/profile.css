@@ -52,13 +52,13 @@
 }
 @media screen and (max-width:480px){
     .profile{   
-        flex-direction: column;     
+        flex-direction: column;  
         justify-content: center;
         align-items: center;
     }
     .profile__info{
         display: flex;
-        flex-wrap: wrap ;
+        flex-wrap: wrap;
         width: 100px;
     }
 .profile__description{

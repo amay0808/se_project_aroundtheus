@@ -1,8 +1,9 @@
 .card{
-display: flex;  
+display: flex;
 flex-direction: column;
 list-style: none;
-border-radius: 10px;
+
+
 }
 .card__title{
     text-overflow: ellipsis;
@@ -17,13 +18,14 @@ border-radius: 10px;
 display: grid;
 justify-content: center;
 grid-template-columns: repeat( auto-fit, 282px);
-grid-gap: 20px 17px; 
+grid-gap: 20px 17px;
 padding: 0;
 margin: 0;
 }
 .card__image{
 width: 282px;
 height: 282px;
+border-radius: 10px;
 }
 .card__description{
 display: flex;
@@ -35,6 +37,7 @@ padding-left: 20px;
 padding-right: 20px;
 align-items: center;
 justify-content: space-between;
+border-radius: 10px;
 }
 .card__like-button{
 background: transparent url(../images/like-inactive.svg);
