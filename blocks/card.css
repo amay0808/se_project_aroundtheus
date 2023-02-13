@@ -1,4 +1,10 @@
-.cards{
+.card{
+display: flex;  
+flex-direction: column;
+list-style: none;
+border-radius: 10px;
+}
+.card__title{
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -6,12 +12,6 @@
     font-weight: 900;
     font-size: 24px;
     line-height: 30px;
-}
-.card{
-display: flex;  
-flex-direction: column;
-list-style: none;
-border-radius: 10px;
 }
 .card__list{
 display: grid;
