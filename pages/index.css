@@ -69,7 +69,13 @@
     margin-right: 24px;
 }
 .cards{
-
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        font-family: 'Inter';
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 30px;
 }
 .card{
     display: flex;  
@@ -106,6 +112,7 @@ background-position: center;
 background-repeat: no-repeat;
 width: 21px;
 height: 18px;
+border: none;
 }
 @media screen and (max-width:480px){
     .profile{
