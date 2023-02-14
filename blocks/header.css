@@ -7,13 +7,9 @@
 }
 @media  screen and (min-width 320px) and (max-width 768px) {
      .header{padding-top: 28px;
-     padding-left: 27px;}
-
-     .header img{
-        width:126px;
-        height: 24px;
-     }
-     .header__logo{
+            padding-left: 27px;
+        }
+    .header__logo{
         width: 126px;
         height: 24px;
      }
