@@ -1,3 +1,31 @@
 .header{
-    margin-top: 45px;
+    padding-top: 45px;
+    padding-right: 200px;
+   
 }
+hr {
+    position: absolute;
+    top: 119px;
+    left: 200px;
+    width: 880px;
+    height: 0;
+    transform: rotate(0deg);
+    border: none;
+    border-top: 1px solid #545454;
+    opacity: 0.7;
+    mix-blend-mode: pass-through;
+    text-align: center;
+  }
+  
+      
+     /* @media (min-width: 600px) {
+        hr {
+          width: 600px;
+        }
+      }
+      
+      @media (min-width: 900px) {
+        hr {
+          width: 880px;
+        }
+      }*/
