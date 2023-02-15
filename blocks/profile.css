@@ -42,8 +42,8 @@
     line-height: 48px;
     font-weight: 500;
     grid-area: title;
-    margin: 0;  
-    padding-left: 50px;;
+    margin: 0;
+    padding-left: 50px;
 }
 .profile__description{
     font-size: 18px;
