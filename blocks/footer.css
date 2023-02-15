@@ -1,10 +1,9 @@
 .footer{
+max-width: 318px;
 padding-top: 67px;
-padding-bottom: 60px;
-/*display: flex;
-justify-content: center;*/
+padding-left: 70px;
+padding-bottom: 145px;
 }
-
 
 .footer__copyright{
     font-family: 'Inter';
@@ -13,7 +12,7 @@ justify-content: center;*/
     font-size: 18px;
     line-height: 22px;
     color: #545454;
-    margin: 0;
+    margin-bottom: 67px;
 }
 
 @media screen and (min-width: 320px) and (max-width:760px){
