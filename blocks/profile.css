@@ -38,6 +38,7 @@
     outline: 1px solid white;
 }
 .profile__title{
+    font-family: 'Inter', Arial,sans-serif;
     font-size: 42px;
     line-height: 48px;
     font-weight: 500;
@@ -46,6 +47,7 @@
     padding-left: 50px;
 }
 .profile__description{
+    font-family: 'Inter', Arial,sans-serif;
     font-size: 18px;
     line-height: 22px;
     font-weight: 400px;
@@ -61,7 +63,7 @@
     object-fit: cover;
     background-position: center;
 }
-@media screen and (max-width:768px){
+@media screen and (min-width: 320px) and (max-width:768px){
     .profile{
         flex-direction: column;
     }
