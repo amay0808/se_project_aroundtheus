@@ -2,6 +2,7 @@
 display: flex;
 flex-direction: column;
 list-style: none;
+border-radius: 10px;
 
 }
 
@@ -47,3 +48,17 @@ width: 21px;
 height: 18px;
 border: none;
 }
+/*@media screen and (max-width: 480px){
+.profile{
+    background-color: pink;
+    flex-direction: column;
+}
+.profile__info{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-left: 62px;
+    margin-right: 62px;;
+}
+}*/
+    
