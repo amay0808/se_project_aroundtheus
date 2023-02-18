@@ -51,7 +51,7 @@ height: 18px;
 border: none;
 }
 .card__like-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);;
+    opacity: 0.5;
 }
 
     

@@ -26,10 +26,6 @@
     outline : 1px solid white;
     
 }
-.profile__edit-button:hover {
-    background-color:rgba(0, 0, 0, 0.8);
-      }
-      
 
 
 .profile__add-button{
@@ -42,8 +38,17 @@
     width: 150px;
     outline: 2px solid white;
     border-radius: 2px;
-
 }
+
+.profile__add-button:hover {
+    opacity: 0.6;
+  }
+  
+.profile__edit-button:hover {
+    opacity: 0.6;
+      }
+
+
 
 .profile__title{
     font-family: 'Inter', Arial,sans-serif;
