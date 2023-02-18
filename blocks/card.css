@@ -14,12 +14,14 @@ border-radius: 10px;
     font-weight: 900;
     font-size: 24px;
     line-height: 30px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 .card__list{
 display: grid;
 justify-content: center;
 grid-template-columns: repeat( auto-fit, 282px);
-grid-gap: 20px 17px;
+gap: 20px 17px;
 padding: 0;
 margin:0;
 }
@@ -48,17 +50,5 @@ width: 21px;
 height: 18px;
 border: none;
 }
-/*@media screen and (max-width: 480px){
-.profile{
-    background-color: pink;
-    flex-direction: column;
-}
-.profile__info{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    margin-left: 62px;
-    margin-right: 62px;;
-}
-}*/
+
     

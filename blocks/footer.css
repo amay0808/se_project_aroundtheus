@@ -1,7 +1,6 @@
 .footer{
 max-width: 880px;
 padding-top: 67px;
-padding-bottom: 145px;
 }
 
 .footer__copyright{
@@ -11,17 +10,8 @@ padding-bottom: 145px;
     font-size: 18px;
     line-height: 22px;
     color: #545454;
+    margin-top: 0;
     margin-bottom: 67px;
 }
 
 
-/*@media screen and (min-width: 320px) and (max-width:760px){
-    .footer{ 
-        padding-top: 48px;
-        padding-bottom: 36px;
-    }
-    .footer__copyright{
-    font-size: 14px;
-      line-height: 17px;
-    }
-}*/

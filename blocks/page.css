@@ -30,7 +30,6 @@
 
 @media screen and (max-width: 768px) {
     .page__section {
-      width: 100%;
       padding: 0;
       padding-left: 0;
       padding-right: 0;
