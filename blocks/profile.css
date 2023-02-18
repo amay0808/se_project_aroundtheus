@@ -26,6 +26,12 @@
     outline : 1px solid white;
     
 }
+.profile__edit-button:hover {
+    background-color:rgba(0, 0, 0, 0.8);
+      }
+      
+
+
 .profile__add-button{
     background: transparent url(../images/add.svg);
     background-position: center;
@@ -34,10 +40,11 @@
     grid-area: button;
     height: 50px;
     width: 150px;
-    border: 2px solid white;
-     border-radius: 2px;
+    outline: 2px solid white;
+    border-radius: 2px;
 
 }
+
 .profile__title{
     font-family: 'Inter', Arial,sans-serif;
     font-size: 42px;
@@ -45,6 +52,7 @@
     font-weight: 500;
     grid-area: title;
     margin: 0;
+    text-overflow: ellipsis;
     
 }
 .profile__description{
@@ -54,6 +62,7 @@
     grid-area: description;
     margin: 0;
     padding-top: 16px;
+    text-overflow: ellipsis;
     
     
 
@@ -76,6 +85,7 @@
         line-height: 27px;
         letter-spacing: 0;
         text-align: center;
+        
         
 
     }
@@ -102,6 +112,7 @@
         margin-top: 14px;
         margin-bottom: 36px;
         padding: 0;
+        
         
     }
     .profile__add-button{
