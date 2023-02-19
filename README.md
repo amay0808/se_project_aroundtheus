@@ -6,25 +6,22 @@ Around The U.S. is a web application that allows users to create a virtual scrap
 
 ### Features
 
-* Add and remove photos from your virtual scrapbook
-* Like photos posted by other users
-* Make minor adjustments to your profile
-* Fully responsive design for optimal viewing on any device
+- Add and remove photos from your virtual scrapbook
+- Like photos posted by other users
+- Make minor adjustments to your profile
+- Fully responsive design for optimal viewing on any device
 
 ### Technologies Used
 
 This project was built using:
 
-* HTML
-* CSS
-
+- HTML
+- CSS
 
 ### Screenshots
 
 ![Screenshot of Around The U.S. on Desktop](./images/around-the-us.png)
 
+- [https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1](link to the project on gigma)
 
-
-  
-* [Link to the project on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)  
-  
+- [https://amay0808.github.io/se_project_aroundtheus/](link to Live site)
