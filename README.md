@@ -22,6 +22,6 @@ This project was built using:
 
 ![Screenshot of Around The U.S. on Desktop](./images/Screenshot%202023-02-22%20at%2012.47.41%20AM.png)
 
-- [https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1](link to the project on gigma)
+- [https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1]
 
-- [https://amay0808.github.io/se_project_aroundtheus/](link to Live site)
+- [https://amay0808.github.io/se_project_aroundtheus/]
