@@ -8,10 +8,19 @@
   display: flex;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0 19px;
-  display: none;
+  /*display: none;*/
 }
 .modal_opened {
   display: flex;
+}
+
+.modal__container {
+  position: relative;
+  background-color: #fff;
+  color: black;
+  margin: auto;
+  padding: 36px;
+  border-radius: 10px;
 }
 .modal__heading {
   font-family: "Inter", Arial, sans-serif;
@@ -21,21 +30,23 @@
   line-height: 29px;
 }
 .modal__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
+  margin-top: 243.34px;
+  margin-right: 36px;
+  margin-bottom: 36.51px;
+  margin-left: 36px;
   width: 358px;
   height: 50.15px;
-  left: 461px;
-  top: 438.34px;
   background-color: black;
   border-radius: 2px;
 }
-.modal__container {
-  position: relative;
-  background-color: #fff;
-  color: black;
-  margin: auto;
-  padding: 36px;
-  border-radius: 10px;
+.modal__title {
+  border: none;
+}
+.modal__description {
 }
 .modal__close {
   background-color: transparent;
