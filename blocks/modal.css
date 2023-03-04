@@ -8,8 +8,9 @@
   display: flex;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0 19px;
-  display: flex;
-  justify-content: center;
+  /*display: flex;
+  justify-content: center;*/
+  display: none;
 }
 .modal__form {
   display: flex;
