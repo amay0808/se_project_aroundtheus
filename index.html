@@ -55,21 +55,23 @@
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close" id="modal-close-button"></button>
-        <p class="modal__heading">Edit Profile</p>
+        <h2 class="modal__heading">Edit Profile</h2>
         <form class="modal__form">
           <input
             class="modal__title"
             type="text"
-            placeholder="Jacques Cousteau"
+            placeholder="Name"
             name="title"
             id="profile-title-input"
+            required
           />
           <input
             class="modal__description"
             type="text"
-            placeholder="Explorer"
+            placeholder="About"
             name="description"
             id="profile-description-input"
+            required
           />
 
           <button class="modal__button">Save</button>
@@ -85,6 +87,6 @@
         </div>
       </li>
     </template>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" defer></script>
   </body>
 </html>
