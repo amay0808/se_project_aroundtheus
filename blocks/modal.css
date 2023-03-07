@@ -60,35 +60,21 @@
   background-color: black;
   border: none;
 }
-.modal__title {
-  font-family: "Inter", Arial, sans-serif;
-  font-style: normal;
-  max-width: 100%;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin-bottom: 57px;
-  line-height: 17px;
-  font-size: 14px;
-}
+
 .modal__input {
   font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   max-width: 100%;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin-bottom: 70px;
   line-height: 17px;
   font-size: 14px;
+  margin-bottom: 57px;
 }
-
-.modal__description {
-  font-family: "Inter", Arial, sans-serif;
-  font-style: normal;
-  max-width: 100%;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+.modal__input:last-of-type {
   margin-bottom: 48px;
 }
+
 .modal__close {
   background-color: transparent;
   background-image: url(../images/close-icon.svg);
