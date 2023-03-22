@@ -42,7 +42,11 @@
             ></button>
             <p class="profile__description">Explorer</p>
           </div>
-          <button class="profile__add-button" type="button"></button>
+          <button
+            class="profile__add-button"
+            id="profile__add-button"
+            type="button"
+          ></button>
         </section>
         <section class="card page__section">
           <ul class="card__list"></ul>
@@ -52,6 +56,7 @@
         <p class="footer__copyright">&copy; 2022 Around The U.S</p>
       </footer>
     </div>
+    <!-- Edit modal-->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close" id="modal-close-button"></button>
@@ -74,6 +79,32 @@
             required
           />
 
+          <button class="modal__button">Save</button>
+        </form>
+      </div>
+    </div>
+    <!-- Add Modal -->
+    <div class="modal" id="add-modal">
+      <div class="modal__container">
+        <button class="modal__close" id="add-modal-close-button"></button>
+        <h2 class="modal__heading">New Place</h2>
+        <form class="modal__form">
+          <input
+            class="modal__input modal__input_type_title"
+            type="text"
+            placeholder="Title"
+            name="title"
+            id="add-modal-title-input"
+            required
+          />
+          <input
+            class="modal__input modal__input_type_url"
+            type="text"
+            placeholder="Image URL"
+            name="url"
+            id="add-modal-description-input"
+            required
+          />
           <button class="modal__button">Save</button>
         </form>
       </div>

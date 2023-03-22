@@ -38,14 +38,20 @@ const profileDescriptionInput = document.querySelector(
 const profileEditCloseButton = profileEditModal.querySelector(
   "#modal-close-button"
 );
+const addNewCardButton = document.querySelector("#profile__add-button");
+const addModal = document.querySelector("#add-modal");
+const addModalCloseButton = addModal.querySelector("#add-modal-close-button");
 const profileEditForm = profileEditModal.querySelector(".modal__form");
 const cardListEl = document.querySelector(".card__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
+
 // Functions
-function closePopup() {
-  profileEditModal.classList.remove("modal_opened");
+
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
 }
+
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImageEl = cardElement.querySelector(".card__image");
@@ -55,6 +61,7 @@ function getCardElement(cardData) {
   cardTitleEl.textContent = cardData.name;
   return cardElement;
 }
+
 //event handler
 function fillProfileForm() {
   profileTitleInput.value = profileTitle.textContent;
@@ -65,6 +72,14 @@ function openEditProfileModal() {
   fillProfileForm();
   profileEditModal.classList.add("modal_opened");
 }
+function openAddModal() {
+  addModal.classList.add("modal_opened");
+  console.log("testing", addModal);
+}
+
+function closeAddModal() {
+  addModal.classList.remove("modal_opened");
+}
 
 function handleProfileEditSubmit(e) {
   e.preventDefault();
@@ -74,9 +89,13 @@ function handleProfileEditSubmit(e) {
 }
 
 //event listeners
+profileEditCloseButton.addEventListener("click", () =>
+  closeModal(profileEditModal)
+);
+addModalCloseButton.addEventListener("click", () => closeModal(addModal));
 profileEditButton.addEventListener("click", openEditProfileModal);
-profileEditCloseButton.addEventListener("click", closePopup);
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
+addNewCardButton.addEventListener("click", openAddModal);
 
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
