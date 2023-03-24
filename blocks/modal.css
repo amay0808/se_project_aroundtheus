@@ -162,12 +162,15 @@
     height: 26px;
     margin-bottom: 13px;
   }
-  .modal__container_image {
+  .modal__container-image {
     width: 100%;
     max-width: calc(100% - 20px * 2);
     padding: 22px;
     padding-bottom: 25px;
     width: 100%;
-    height: 322px;
+    height: 299px;s
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-bottom: 133px;
   }
 }
