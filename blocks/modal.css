@@ -95,7 +95,7 @@
   cursor: pointer;
 }
 
-.modal__container_image {
+.modal__container-image {
   position: relative;
   background-color: transparent;
   margin: auto;
