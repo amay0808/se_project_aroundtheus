@@ -51,6 +51,8 @@ const cardTitleInput = addCardFormElement.querySelector(
   ".modal__input_type_title"
 );
 const cardUrlInput = addCardFormElement.querySelector(".modal__input_type_url");
+const previewImageModal = document.querySelector("#preview-image-modal");
+
 // Functions
 
 function closeModal(modal) {
@@ -62,14 +64,32 @@ function getCardElement(cardData) {
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
   const likeButton = cardElement.querySelector(".card__like-button");
-  //find delte button
+  const deleteButton = cardElement.querySelector(".card__delete-button");
 
-  //add event listner to the delete button
-  // cardElement.remove();
+  deleteButton.addEventListener("click", () => {
+    cardElement.remove();
+  });
 
-  //add click listner to the cardImage element
+  cardImageEl.addEventListener("click", () => {
+    openModal(previewImageModal, cardData);
+  });
+  // image modal
+  function openModal(modal, cardData) {
+    const previewImage = modal.querySelector(".modal__preview-image");
+    const previewTitle = modal.querySelector(".modal__preview-title");
+    previewImage.src = cardData.link;
+    previewImage.alt = cardData.name;
+    previewTitle.textContent = cardData.name;
+    modal.classList.add("modal_opened");
+  }
+  const previewImageModalCloseButton = document.querySelector(
+    "#preview-image-modal-close-button"
+  );
 
-  //openModal withpreviewImagModal
+  previewImageModalCloseButton.addEventListener("click", () => {
+    closeModal(previewImageModal);
+  });
+
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");
   });
