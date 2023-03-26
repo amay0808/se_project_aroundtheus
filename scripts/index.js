@@ -89,10 +89,6 @@ function getCardElement(cardData) {
 
   // image modal
 
-  // const previewImageModalCloseButton = document.querySelector(
-  //   "#preview-image-modal-close-button"
-  // );
-
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");
   });
