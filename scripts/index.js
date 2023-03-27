@@ -97,17 +97,6 @@ function getCardElement(cardData) {
     openImageModal(cardData);
   });
 
-  function openImageModal(cardData) {
-    openModal(cardData);
-  }
-
-  function openModal(cardData) {
-    previewImage.src = cardData.link;
-    previewImage.alt = cardData.name;
-    previewTitle.textContent = cardData.name;
-    previewImageModal.classList.add("modal_opened");
-  }
-
   cardImageEl.addEventListener("click", () => {
     openImageModal(cardData);
   });
@@ -159,14 +148,7 @@ addNewCardButton.addEventListener("click", () => {
   openPopup(addModal);
 });
 
-function openPopup(popup) {
-  console.log("Trying to open popup:", popup);
-  popup.classList.add("modal_opened");
-}
-
 //event listeners
-
-const closeButtons = document.querySelectorAll(".popup__close");
 
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
