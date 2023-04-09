@@ -69,7 +69,10 @@
             name="title"
             id="profile-title-input"
             required
+            minlength="2"
+            maxlength="40"
           />
+          <span class="popup__error" id="profile-title-input-error"></span>
           <input
             class="modal__title modal__input"
             type="text"
@@ -77,8 +80,13 @@
             name="description"
             id="profile-description-input"
             required
+            minlength="2"
+            maxlength="200"
           />
-
+          <span
+            class="popup__error"
+            id="profile-description-input-error"
+          ></span>
           <button class="modal__button">Save</button>
         </form>
       </div>
@@ -134,5 +142,6 @@
       </li>
     </template>
     <script src="./scripts/index.js" defer></script>
+    <script src="./validation.js" defer></script>
   </body>
 </html>
