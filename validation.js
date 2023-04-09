@@ -1,17 +1,27 @@
+// 1. Define functions to show and hide input errors.
 function showInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   const errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
   inputEl.classList.add(inputErrorClass);
   errorMessageEl.textContent = inputEl.validationMessage;
   errorMessageEl.classList.add(errorClass);
 }
+
 function hideInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   const errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
   inputEl.classList.remove(inputErrorClass);
-  errorMessageEl.textContent = ".";
+  errorMessageEl.textContent = "";
   errorMessageEl.classList.remove(errorClass);
 }
 
+// 2. Define a function to check input validity and call show/hide input error functions accordingly.
+
 function checkInputValidity(formEl, inputEl, options) {
+  if (inputEl.name === "url" && !inputEl.validity.valid) {
+    inputEl.setCustomValidity("Please enter a web address");
+  } else {
+    inputEl.setCustomValidity("");
+  }
+
   if (!inputEl.validity.valid) {
     showInputError(formEl, inputEl, options);
     return;
@@ -19,10 +29,26 @@ function checkInputValidity(formEl, inputEl, options) {
   hideInputError(formEl, inputEl, options);
 }
 
-// create function disablebutton
+// function checkInputValidity(formEl, inputEl, options) {
+//   if (!inputEl.validity.valid) {
+//     showInputError(formEl, inputEl, options);
+//     return;
+//   }
+//   hideInputError(formEl, inputEl, options);
+// }
 
-// create function enable button
+// 3. Define functions to disable and enable the submit button.
+function disableButton(button, inactiveButtonClass) {
+  button.classList.add(inactiveButtonClass);
+  button.disabled = true;
+}
 
+function enableButton(button, inactiveButtonClass) {
+  button.classList.remove(inactiveButtonClass);
+  button.disabled = false;
+}
+
+// 4. Define a function to toggle the button state by iterating through input elements and checking their validity.
 function toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
   let foundInvalid = false;
   inputEls.forEach((input) => {
@@ -32,15 +58,14 @@ function toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
   });
 
   if (foundInvalid) {
-    submitButton.classList.add(inactiveButtonClass);
-    submitButton.disabled = true;
+    disableButton(submitButton, inactiveButtonClass);
     return;
   }
 
-  submitButton.classList.remove(inactiveButtonClass);
-  submitButton.disabled = false;
+  enableButton(submitButton, inactiveButtonClass);
 }
 
+// 5. Define a function to set event listeners for input elements, checking input validity and toggling the button state on input events.
 function setEventListener(formEl, options) {
   const { inputSelector } = options;
   const inputEls = [...formEl.querySelectorAll(inputSelector)];
@@ -53,6 +78,7 @@ function setEventListener(formEl, options) {
   });
 }
 
+// 6. Define a function to enable validation for a form, setting up event listeners and managing the form submission.
 function enableValidation(options) {
   const formEls = [...document.querySelectorAll(options.formSelector)];
   formEls.forEach((formEl) => {
@@ -60,20 +86,31 @@ function enableValidation(options) {
       e.preventDefault();
     });
     setEventListener(formEl, options);
-
-    // look for all inputs inside of form
-    // loop through all the inputs to see if they are valid
-    // if input is not valid
-    // grab the validation message
-    // add error class to input
-    // display error message
-    // disable button
-    // if all inputs are valid
-    // enable button
-    // reset error messages
   });
 }
+function closePopupOnOverlayClick(popup, e) {
+  if (e.target === popup) {
+    closePopup(popup);
+  }
+}
+const profileEditModal = document.getElementById("profile-edit-modal");
+const addImageModal = document.getElementById("add-modal");
+const imagePreviewModal = document.getElementById("preview__image-modal"); // Renamed variable
 
+profileEditModal.addEventListener("click", (e) =>
+  closePopupOnOverlayClick(profileEditModal, e)
+);
+addImageModal.addEventListener("click", (e) =>
+  closePopupOnOverlayClick(addImageModal, e)
+);
+imagePreviewModal.addEventListener(
+  "click",
+  (
+    e // Updated variable name
+  ) => closePopupOnOverlayClick(imagePreviewModal, e)
+);
+
+// 7. Set up configuration options for form and input selectors, classes, and other properties.
 const config = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
@@ -82,4 +119,6 @@ const config = {
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__error_visible",
 };
+
+// 8. Call the enableValidation function with the provided configuration options.
 enableValidation(config);
