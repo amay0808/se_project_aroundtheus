@@ -14,12 +14,11 @@
 }
 
 .modal__form {
-  display: flex;
   flex-direction: column;
   width: 358px;
+  display: flex;
 }
 .modal_opened {
-  display: flex;
   visibility: visible;
   opacity: 1;
   transition-delay: 0s;
@@ -37,6 +36,7 @@
   padding-bottom: 0;
   border-radius: 10px;
   max-width: 100%;
+  transition: opacity 0.3s linear;
 }
 
 .modal__heading {
@@ -65,9 +65,10 @@
   height: 50px;
   background-color: black;
   border: none;
+  transition: background-color 0.3s linear;
 }
 .modal__button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 0.8;
 }
 
 .modal__input {
@@ -96,6 +97,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
+  transition: opacity 0.3s linear;
 }
 
 .modal__container-image {
@@ -109,6 +111,7 @@
   padding-bottom: 0;
   border-radius: 10px;
   max-width: 100%;
+  transition: opacity 0.3s linear;
 }
 .modal__preview-image {
   max-width: 75vw;
@@ -128,6 +131,14 @@
 }
 .modal__button_disabled {
   background-color: #f7f7f7;
+  cursor: default;
+}
+.modal__button_disabled:hover {
+  opacity: 1;
+}
+.modal__button:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
 }
 .modal__error {
   margin-bottom: 57px;
