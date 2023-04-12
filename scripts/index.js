@@ -64,15 +64,15 @@ const previewImageModalCloseButton = document.querySelector(
 );
 
 // Functions
-function showInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
-  const errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
+// function showInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
+//   const errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
 
-  inputEl.classList.add(inputErrorClass);
+//   inputEl.classList.add(inputErrorClass);
 
-  errorMessageEl.textContent = inputEl.validationMessage;
+//   errorMessageEl.textContent = inputEl.validationMessage;
 
-  errorMessageEl.classList.add(errorClass);
-}
+//   errorMessageEl.classList.add(errorClass);
+// }
 // Functions
 function openPopup(popup) {
   popup.classList.add("modal_opened");
@@ -120,6 +120,21 @@ function getCardElement(cardData) {
   cardImageEl.alt = cardData.name;
   cardTitleEl.textContent = cardData.name;
   return cardElement;
+}
+function setEventListener(formEl, options) {
+  const { inputSelector } = options;
+  const inputEls = [...formEl.querySelectorAll(inputSelector)];
+  const submitButton = formEl.querySelector(".modal__button");
+
+  // Add this line to disable the button initially
+  toggleButtonState(inputEls, submitButton, options);
+
+  inputEls.forEach((inputEl) => {
+    inputEl.addEventListener("input", (e) => {
+      checkInputValidity(formEl, inputEl, options);
+      toggleButtonState(inputEls, submitButton, options);
+    });
+  });
 }
 
 //event handler
@@ -185,11 +200,8 @@ profileEditModal.addEventListener("click", (e) =>
 addImageModal.addEventListener("click", (e) =>
   closePopupOnOverlayClick(addImageModal, e)
 );
-imagePreviewModal.addEventListener(
-  "click",
-  (
-    e // Updated variable name
-  ) => closePopupOnOverlayClick(imagePreviewModal, e)
+imagePreviewModal.addEventListener("click", (e) =>
+  closePopupOnOverlayClick(imagePreviewModal, e)
 );
 
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
