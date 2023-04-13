@@ -1,26 +1,3 @@
-function setEventListener(formEl, options) {
-  const { inputSelector } = options;
-  const inputEls = [...formEl.querySelectorAll(inputSelector)];
-  const submitButton = formEl.querySelector(".modal__button");
-
-  toggleButtonState(inputEls, submitButton, options);
-
-  inputEls.forEach((inputEl) => {
-    inputEl.addEventListener("input", (e) => {
-      checkInputValidity(formEl, inputEl, options);
-      toggleButtonState(inputEls, submitButton, options);
-    });
-  });
-}
-function setEventListeners(config) {
-  document.querySelectorAll("input").forEach((input) => {
-    input.addEventListener("input", () => {
-      const formEl = input.closest("form");
-      checkInputValidity(formEl, input, config);
-    });
-  });
-}
-
 function showInputError(
   formEl,
   inputEl,
@@ -54,16 +31,6 @@ function checkFormValidity(inputs) {
   return inputs.every((input) => input.validity.valid);
 }
 
-function toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
-  const isFormValid = checkFormValidity(inputEls);
-
-  if (isFormValid) {
-    enableButton(submitButton, inactiveButtonClass);
-  } else {
-    disableButton(submitButton, inactiveButtonClass);
-  }
-}
-
 function disableButton(button, inactiveButtonClass) {
   button.classList.add(inactiveButtonClass);
   button.disabled = true;
@@ -72,6 +39,16 @@ function disableButton(button, inactiveButtonClass) {
 function enableButton(button, inactiveButtonClass) {
   button.classList.remove(inactiveButtonClass);
   button.disabled = false;
+}
+
+function toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
+  const isFormValid = checkFormValidity(inputEls);
+
+  if (isFormValid) {
+    enableButton(submitButton, inactiveButtonClass);
+  } else {
+    disableButton(submitButton, inactiveButtonClass);
+  }
 }
 
 function setEventListener(formEl, options) {
@@ -85,6 +62,15 @@ function setEventListener(formEl, options) {
     inputEl.addEventListener("input", (e) => {
       checkInputValidity(formEl, inputEl, options);
       toggleButtonState(inputEls, submitButton, options);
+    });
+  });
+}
+
+function setEventListeners(config) {
+  document.querySelectorAll("input").forEach((input) => {
+    input.addEventListener("input", () => {
+      const formEl = input.closest("form");
+      checkInputValidity(formEl, input, config);
     });
   });
 }
