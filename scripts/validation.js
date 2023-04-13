@@ -1,3 +1,26 @@
+function setEventListener(formEl, options) {
+  const { inputSelector } = options;
+  const inputEls = [...formEl.querySelectorAll(inputSelector)];
+  const submitButton = formEl.querySelector(".modal__button");
+
+  toggleButtonState(inputEls, submitButton, options);
+
+  inputEls.forEach((inputEl) => {
+    inputEl.addEventListener("input", (e) => {
+      checkInputValidity(formEl, inputEl, options);
+      toggleButtonState(inputEls, submitButton, options);
+    });
+  });
+}
+function setEventListeners(config) {
+  document.querySelectorAll("input").forEach((input) => {
+    input.addEventListener("input", () => {
+      const formEl = input.closest("form");
+      checkInputValidity(formEl, input, config);
+    });
+  });
+}
+
 function showInputError(
   formEl,
   inputEl,
@@ -87,3 +110,4 @@ const config = {
 };
 
 enableValidation(config);
+setEventListeners(config);
