@@ -51,7 +51,7 @@ function toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
   }
 }
 
-function setEventListener(formEl, options) {
+function setEventListeners(formEl, options) {
   const { inputSelector, submitButtonSelector, inactiveButtonClass } = options;
   const inputEls = [...formEl.querySelectorAll(inputSelector)];
   const submitButton = formEl.querySelector(submitButtonSelector);
@@ -66,15 +66,6 @@ function setEventListener(formEl, options) {
   });
 }
 
-function setEventListeners(config) {
-  document.querySelectorAll("input").forEach((input) => {
-    input.addEventListener("input", () => {
-      const formEl = input.closest("form");
-      checkInputValidity(formEl, input, config);
-    });
-  });
-}
-
 function enableValidation(options) {
   const formEls = [...document.querySelectorAll(options.formSelector)];
 
@@ -82,7 +73,7 @@ function enableValidation(options) {
     formEl.addEventListener("submit", (e) => {
       e.preventDefault();
     });
-    setEventListener(formEl, options);
+    setEventListeners(formEl, options);
   });
 }
 
@@ -96,4 +87,3 @@ const config = {
 };
 
 enableValidation(config);
-setEventListeners(config);
