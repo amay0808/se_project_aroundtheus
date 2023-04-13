@@ -1,10 +1,3 @@
-document.querySelectorAll("input").forEach((input) => {
-  input.addEventListener("input", () => {
-    const formEl = input.closest("form");
-    checkInputValidity(formEl, input, config);
-  });
-});
-
 function showInputError(
   formEl,
   inputEl,

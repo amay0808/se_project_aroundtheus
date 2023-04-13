@@ -31,6 +31,7 @@
   border-top-right-radius: 10px;
   max-width: 100%;
   object-fit: cover;
+  cursor: pointer;
 }
 .card__description {
   display: flex;
@@ -51,6 +52,7 @@
   width: 21px;
   height: 18px;
   border: none;
+  cursor: pointer;
 }
 .card__like-button_active {
   background-image: url(../images/active.svg);

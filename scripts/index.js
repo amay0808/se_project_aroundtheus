@@ -63,17 +63,6 @@ const previewImageModalCloseButton = document.querySelector(
   "#preview-image-modal-close-button"
 );
 
-// Functions
-// function showInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
-//   const errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
-
-//   inputEl.classList.add(inputErrorClass);
-
-//   errorMessageEl.textContent = inputEl.validationMessage;
-
-//   errorMessageEl.classList.add(errorClass);
-// }
-// Functions
 function openPopup(popup) {
   popup.classList.add("modal_opened");
   document.addEventListener("keydown", closeModalByEscape);
@@ -126,7 +115,6 @@ function setEventListener(formEl, options) {
   const inputEls = [...formEl.querySelectorAll(inputSelector)];
   const submitButton = formEl.querySelector(".modal__button");
 
-  // Add this line to disable the button initially
   toggleButtonState(inputEls, submitButton, options);
 
   inputEls.forEach((inputEl) => {
@@ -136,6 +124,16 @@ function setEventListener(formEl, options) {
     });
   });
 }
+function setEventListeners(config) {
+  document.querySelectorAll("input").forEach((input) => {
+    input.addEventListener("input", () => {
+      const formEl = input.closest("form");
+      checkInputValidity(formEl, input, config);
+    });
+  });
+}
+
+setEventListeners(config);
 
 //event handler
 

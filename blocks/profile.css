@@ -23,6 +23,7 @@
   grid-area: button;
   margin-left: 18px;
   outline: 1px solid white;
+  cursor: pointer;
 }
 
 .profile__add-button {
@@ -36,6 +37,7 @@
   outline: 2px solid white;
   border-radius: 2px;
   transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .profile__add-button:hover {
