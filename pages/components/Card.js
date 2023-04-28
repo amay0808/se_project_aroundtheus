@@ -4,7 +4,7 @@ export default class Card {
     this._cardTemplateSelector = cardTemplateSelector;
   }
 
-  _getCardElement() {
+  _getCardElement(openImageModal) {
     const cardTemplate = document.querySelector(this._cardTemplateSelector)
       .content.firstElementChild;
     const cardElement = cardTemplate.cloneNode(true);
@@ -32,7 +32,7 @@ export default class Card {
     return cardElement;
   }
 
-  getview() {
-    return this._getCardElement();
+  getview(openImageModal) {
+    return this._getCardElement(openImageModal);
   }
 }
