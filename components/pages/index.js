@@ -1,8 +1,7 @@
-import { handleProfileEditSubmit } from "../utils/utils.js";
-import FormValidator from "./components/FormValidator.js";
-
-import Card from "./components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import Card from "../components/Card.js";
 import {
+  handleProfileEditSubmit,
   openPopup,
   closePopup,
   openImageModal,
