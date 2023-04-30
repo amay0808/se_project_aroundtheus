@@ -1,12 +1,12 @@
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
 import {
-  handleProfileEditSubmit,
+  // handleProfileEditSubmit,
   openPopup,
   closePopup,
   openImageModal,
   closePopupOnOverlayClick,
-} from "../utils/utils.js";
+} from "../components/utils/utils.js";
 
 const initialCards = [
   {
@@ -39,9 +39,9 @@ const cardData = {
   name: "Yosemite Valley",
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
-
 const card = new Card(cardData, "#card-template");
-card.getview();
+card.getview(openImageModal);
+
 initialCards.reverse();
 
 //elements
@@ -51,7 +51,7 @@ const previewTitle = previewImageModal.querySelector(".modal__preview-title");
 
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditPopup = document.querySelector("#profile-edit-modal");
-const profileCloseButton = document.querySelector("#profile-close-button");
+const profileCloseButton = document.querySelector("#modal-close-button");
 
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
@@ -82,7 +82,7 @@ function fillProfileForm() {
 }
 function renderCard(cardData, container) {
   const card = new Card(cardData, "#card-template");
-  const cardElement = card.getview();
+  const cardElement = card.getview(openImageModal);
   container.prepend(cardElement);
 }
 
@@ -95,26 +95,47 @@ profileEditButton.addEventListener("click", () => {
 addNewCardButton.addEventListener("click", () => {
   openPopup(addModal);
 });
+export function handleProfileEditSubmit(event) {
+  event.preventDefault();
+  profileTitle.textContent = profileTitleInput.value;
+  profileDescription.textContent = profileDescriptionInput.value;
+  closePopup(profileEditPopup);
+}
 
 profileEditForm.addEventListener("submit", (event) => {
-  handleProfileEditSubmit(
-    event,
-    profileTitle,
-    profileDescription,
-    profileTitleInput,
-    profileDescriptionInput,
-    profileEditPopup,
-    closePopup
-  );
+  handleProfileEditSubmit(event);
 });
 
 initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
+profileCloseButton.addEventListener("click", () => {
+  closePopup(profileEditPopup);
+});
+
+addModalCloseButton.addEventListener("click", () => {
+  closePopup(addModal);
+});
+
+previewImageModalCloseButton.addEventListener("click", () => {
+  closePopup(previewImageModal);
+});
+
+profileEditPopup.addEventListener("mousedown", (e) => {
+  closePopupOnOverlayClick(profileEditPopup, e);
+});
+
+addModal.addEventListener("mousedown", (e) => {
+  closePopupOnOverlayClick(addModal, e);
+});
+
+previewImageModal.addEventListener("mousedown", (e) => {
+  closePopupOnOverlayClick(previewImageModal, e);
+});
 const config = {
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__save-button",
-  inactiveButtonClass: "modal__save-button_disabled",
+  inactiveButtonClass: "modal__button_disabled",
   inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__input-error_active",
+  errorClass: "modal__error_visible",
 };
 
 // enableValidation(config);

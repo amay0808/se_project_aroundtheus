@@ -1,5 +1,3 @@
-import { openImageModal } from "./utils/utils.js";
-
 export default class Card {
   constructor(cardData, cardTemplateSelector) {
     this._cardData = cardData;
