@@ -62,7 +62,8 @@ const profileDescriptionInput = document.querySelector(
 const profileEditCloseButton = profileEditPopup.querySelector(
   "#modal-close-button"
 );
-const addNewCardButton = document.querySelector("#profile__add-button");
+const addNewCardButton = document.querySelector(".profile__add-button");
+
 const addModal = document.querySelector("#add-modal");
 const addModalCloseButton = addModal.querySelector("#add-modal-close-button");
 const profileEditForm = profileEditPopup.querySelector(".modal__form");
@@ -85,6 +86,29 @@ function renderCard(cardData, container) {
   const cardElement = card.getview(openImageModal);
   container.prepend(cardElement);
 }
+// ...
+
+// Add this function to handle the Add Card form submission
+function handleAddCardFormSubmit(event) {
+  event.preventDefault();
+  const cardData = {
+    name: cardTitleInput.value,
+    link: cardUrlInput.value,
+  };
+  renderCard(cardData, cardListEl);
+  addCardFormValidator.resetValidation(); // Reset the form validation
+  addCardFormElement.reset(); // Reset the form fields
+  closePopup(addModal);
+}
+
+// ...
+
+// Add event listener for the Add Card form submission
+addCardFormElement.addEventListener("submit", (event) => {
+  handleAddCardFormSubmit(event);
+});
+
+// ...
 
 // event handlers
 profileEditButton.addEventListener("click", () => {

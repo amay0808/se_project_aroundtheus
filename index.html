@@ -45,7 +45,7 @@
           </div>
           <button
             class="profile__add-button"
-            id="profile__add-button"
+            id="profile_add-button"
             type="button"
           ></button>
         </section>
@@ -89,8 +89,6 @@
             id="profile-description-input-error"
           ></span>
           <button class="modal__button modal__save-button">Save</button>
-
-          <!-- <button class="modal__button">Save</button> -->
         </form>
       </div>
     </div>
@@ -98,7 +96,7 @@
     <!-- Add Modal -->
     <div class="modal" id="add-modal">
       <div class="modal__container">
-        <button class="modal__close" id="add-modal-close-button"></button>
+        <button class="modal__ close" id="add-modal-close-button"></button>
         <h2 class="modal__heading">New Place</h2>
         <form class="modal__form">
           <input
@@ -114,22 +112,18 @@
           <span class="modal__error" id="add-modal-title-input-error"></span>
           <input
             class="modal__input modal__input_type_url"
-            type="text"
+            type="url"
             placeholder="Image URL"
-            name="url"
-            id="add-modal-description-input"
+            name="place"
+            id="cardUrlInput"
             required
           />
-          <span
-            class="modal__error"
-            id="add-modal-description-input-error"
-          ></span>
+          <span class="modal__error" id="cardUrlInput-error"></span>
           <button class="modal__button modal__save-button">Create</button>
-
-          <!-- <button class="modal__button">Create</button> -->
         </form>
       </div>
     </div>
+
     <!-- Image Preview Modal -->
     <div class="modal" id="preview__image-modal">
       <div class="modal__container-image">
@@ -154,6 +148,6 @@
         </div>
       </li>
     </template>
-    <script src="./pages/index.js" type="module" defer></script>
+    <script src="./pages/index.js" type="module"></script>
   </body>
 </html>
