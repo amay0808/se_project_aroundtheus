@@ -6,7 +6,7 @@ import {
   closePopup,
   openImageModal,
   closePopupOnOverlayClick,
-} from "../components/utils/utils.js";
+} from "../utils/utils.js";
 
 const initialCards = [
   {
