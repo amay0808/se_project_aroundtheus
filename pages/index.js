@@ -39,8 +39,6 @@ const cardData = {
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
 
-const card = new Card(cardData, "#card-template");
-
 initialCards.reverse();
 
 //elements
@@ -82,10 +80,18 @@ function fillProfileForm() {
 }
 
 function createCard(cardData) {
-  const card = new Card(cardData, "#card-template");
-  return card.generateCard(openImageModal);
+  const card = new Card(cardData, "#card-template", openImageModal);
+  return card.generateCard();
 }
 
+function handleProfileEditSubmit(event) {
+  event.preventDefault();
+
+  profileTitle.textContent = profileTitleInput.value;
+  profileDescription.textContent = profileDescriptionInput.value;
+
+  closePopup(profileEditPopup);
+}
 function renderCard(cardElement, container) {
   container.prepend(cardElement);
 }
@@ -95,15 +101,6 @@ initialCards.forEach((cardData) => {
   renderCard(cardElement, cardListEl);
 });
 
-addNewCardButton.addEventListener("click", () => {
-  resetAddCardForm();
-  openPopup(addModal);
-});
-
-function resetAddCardForm() {
-  const formElement = document.querySelector("#add-modal .modal__form");
-  formElement.reset();
-}
 function handleAddCardFormSubmit(event) {
   event.preventDefault();
 
@@ -114,7 +111,6 @@ function handleAddCardFormSubmit(event) {
   const cardElement = createCard(newCardData);
   renderCard(cardElement, cardListEl);
   addCardFormElement.reset();
-  addCardFormValidator.resetValidation();
 
   closePopup(addModal);
 }
@@ -164,17 +160,6 @@ previewImageModal.addEventListener("mousedown", (e) => {
 
 const popups = document.querySelectorAll(".popup");
 
-popups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup(popup);
-    }
-    if (evt.target.classList.contains("popup__close")) {
-      closePopup(popup);
-    }
-  });
-});
-
 const config = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
@@ -182,14 +167,6 @@ const config = {
   inactiveButtonClass: "modal__button_disabled",
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__error_visible",
-};
-
-const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(config, formElement);
-    validator.enableValidation();
-  });
 };
 
 const profileEditFormValidator = new FormValidator(config, profileEditForm);
