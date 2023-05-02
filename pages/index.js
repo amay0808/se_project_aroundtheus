@@ -1,7 +1,6 @@
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
 import {
-  // handleProfileEditSubmit,
   openPopup,
   closePopup,
   openImageModal,
@@ -39,8 +38,8 @@ const cardData = {
   name: "Yosemite Valley",
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
+
 const card = new Card(cardData, "#card-template");
-card.getview(openImageModal);
 
 initialCards.reverse();
 
@@ -81,56 +80,64 @@ function fillProfileForm() {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
 }
-function renderCard(cardData, container) {
+
+function createCard(cardData) {
   const card = new Card(cardData, "#card-template");
-  const cardElement = card.getview(openImageModal);
+  return card.generateCard(openImageModal);
+}
+
+function renderCard(cardElement, container) {
   container.prepend(cardElement);
 }
-// ...
 
-// Add this function to handle the Add Card form submission
+initialCards.forEach((cardData) => {
+  const cardElement = createCard(cardData);
+  renderCard(cardElement, cardListEl);
+});
+
+addNewCardButton.addEventListener("click", () => {
+  resetAddCardForm();
+  openPopup(addModal);
+});
+
+function resetAddCardForm() {
+  const formElement = document.querySelector("#add-modal .modal__form");
+  formElement.reset();
+}
 function handleAddCardFormSubmit(event) {
   event.preventDefault();
-  const cardData = {
+
+  const newCardData = {
     name: cardTitleInput.value,
     link: cardUrlInput.value,
   };
-  renderCard(cardData, cardListEl);
-  addCardFormValidator.resetValidation(); // Reset the form validation
-  addCardFormElement.reset(); // Reset the form fields
+  const cardElement = createCard(newCardData);
+  renderCard(cardElement, cardListEl);
+  addCardFormElement.reset();
+  addCardFormValidator.resetValidation();
+
   closePopup(addModal);
 }
 
-// ...
-
-// Add event listener for the Add Card form submission
-addCardFormElement.addEventListener("submit", (event) => {
-  handleAddCardFormSubmit(event);
-});
-
-// ...
-
-// event handlers
 profileEditButton.addEventListener("click", () => {
   fillProfileForm();
   openPopup(profileEditPopup);
 });
 
 addNewCardButton.addEventListener("click", () => {
+  addCardFormElement.reset();
+  addCardFormValidator.resetValidation();
   openPopup(addModal);
 });
-export function handleProfileEditSubmit(event) {
-  event.preventDefault();
-  profileTitle.textContent = profileTitleInput.value;
-  profileDescription.textContent = profileDescriptionInput.value;
-  closePopup(profileEditPopup);
-}
 
 profileEditForm.addEventListener("submit", (event) => {
   handleProfileEditSubmit(event);
 });
+addCardFormElement.addEventListener("submit", (event) => {
+  handleAddCardFormSubmit(event);
+  addCardFormValidator.resetValidation();
+});
 
-initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
 profileCloseButton.addEventListener("click", () => {
   closePopup(profileEditPopup);
 });
@@ -154,7 +161,22 @@ addModal.addEventListener("mousedown", (e) => {
 previewImageModal.addEventListener("mousedown", (e) => {
   closePopupOnOverlayClick(previewImageModal, e);
 });
+
+const popups = document.querySelectorAll(".popup");
+
+popups.forEach((popup) => {
+  popup.addEventListener("mousedown", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains("popup__close")) {
+      closePopup(popup);
+    }
+  });
+});
+
 const config = {
+  formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__save-button",
   inactiveButtonClass: "modal__button_disabled",
@@ -162,7 +184,14 @@ const config = {
   errorClass: "modal__error_visible",
 };
 
-// enableValidation(config);
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    validator.enableValidation();
+  });
+};
+
 const profileEditFormValidator = new FormValidator(config, profileEditForm);
 profileEditFormValidator.enableValidation();
 

@@ -2,13 +2,9 @@ export default class Card {
   constructor(cardData, cardTemplateSelector) {
     this._cardData = cardData;
     this._cardTemplateSelector = cardTemplateSelector;
-    this._cardElement = this._createCardElement();
-  }
-
-  _createCardElement() {
     const cardTemplate = document.querySelector(this._cardTemplateSelector)
       .content.firstElementChild;
-    return cardTemplate.cloneNode(true);
+    this._cardElement = cardTemplate.cloneNode(true);
   }
 
   _getCardElement(openImageModal) {
@@ -38,7 +34,8 @@ export default class Card {
     return this._cardElement;
   }
 
-  getview(openImageModal) {
-    return this._getCardElement(openImageModal);
+  generateCard(openImageModal) {
+    const card = this._getCardElement(openImageModal);
+    return card;
   }
 }

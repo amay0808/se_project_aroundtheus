@@ -13,9 +13,11 @@ export function closePopup(popup) {
 }
 
 function closeByEscape(evt) {
-  const openedPopup = document.querySelector(".modal_opened");
-  if (evt.key === "Escape" && openedPopup) {
-    closePopup(openedPopup);
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".modal_opened");
+    if (openedPopup) {
+      closePopup(openedPopup);
+    }
   }
 }
 
