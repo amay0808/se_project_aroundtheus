@@ -24,7 +24,7 @@ module.exports = {
     open: true,
     liveReload: true,
     hot: false,
-    historyApiFallback: true, // ADD THIS LINE
+    historyApiFallback: true,
   },
   module: {
     rules: [

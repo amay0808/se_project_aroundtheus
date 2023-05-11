@@ -7,7 +7,8 @@ import {
   closePopupOnOverlayClick,
 } from "../utils/utils";
 // src/index.js
-import "./index.css";
+import "../vendor/index.css";
+
 // src/index.js
 import logo from "../images/logo.svg";
 import avatar from "../images/jacques-cousteau.jpg";
