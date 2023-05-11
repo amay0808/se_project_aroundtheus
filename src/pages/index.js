@@ -8,6 +8,10 @@ import {
 } from "../utils/utils";
 // src/index.js
 import "./index.css";
+// src/index.js
+import logo from "../images/logo.svg";
+import avatar from "../images/jacques-cousteau.jpg";
+import favicon from "../images/favicon.ico";
 
 const initialCards = [
   {

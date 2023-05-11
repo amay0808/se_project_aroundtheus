@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "main.js",
-    publicPath: "",
+    publicPath: "/",
   },
   target: ["web", "es5"],
   stats: "errors-only",
@@ -24,6 +24,7 @@ module.exports = {
     open: true,
     liveReload: true,
     hot: false,
+    historyApiFallback: true, // ADD THIS LINE
   },
   module: {
     rules: [
@@ -44,6 +45,13 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif|woff(2)?|eot|ttf|otf)$/,
         type: "asset/resource",
+      },
+      {
+        test: /\.ico$/,
+        loader: "file-loader",
+        options: {
+          name: "[name].[ext]",
+        },
       },
     ],
   },
