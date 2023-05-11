@@ -1,11 +1,13 @@
-import FormValidator from "../components/FormValidator.js";
-import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator";
+import Card from "../components/Card";
 import {
   openPopup,
   closePopup,
   openImageModal,
   closePopupOnOverlayClick,
-} from "../utils/utils.js";
+} from "../utils/utils";
+// src/index.js
+import "./index.css";
 
 const initialCards = [
   {
