@@ -1,15 +1,18 @@
-import ImagePopup from "./path/to/ImagePopup.js";
+import Popup from "./Popup.js";
 
-const imagePopup = new ImagePopup("#preview__image-modal");
-imagePopup.setEventListeners();
+export default class ImagePopup extends Popup {
+  open(imageData) {
+    const imageElement = this._popupElement.querySelector(
+      ".modal__preview-image"
+    );
+    const imageCaption = this._popupElement.querySelector(
+      ".modal__preview-title"
+    );
 
-// Open image popup when clicking on a card__image element
-document.addEventListener("click", (event) => {
-  if (event.target.classList.contains("card__image")) {
-    const imageData = {
-      link: event.target.src,
-      name: event.target.alt,
-    };
-    imagePopup.open(imageData);
+    imageElement.src = imageData.link;
+    imageElement.alt = imageData.name;
+    imageCaption.textContent = imageData.name;
+
+    super.open();
   }
-});
+}
