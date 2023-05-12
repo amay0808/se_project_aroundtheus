@@ -7,7 +7,7 @@ import UserInfo from "../components/UserInfo.js";
 import "./index.css";
 import ImagePopup from "../components/ImagePopup.js";
 
-//elements
+// Elements
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileTitleInput = document.querySelector("#profile-title-input");
 const profileDescriptionInput = document.querySelector(
@@ -15,8 +15,8 @@ const profileDescriptionInput = document.querySelector(
 );
 const addNewCardButton = document.querySelector(".profile__add-button");
 const cardListEl = document.querySelector(".card__list");
-const cardTitleInput = document.querySelector(".modal__input_type_title");
-const cardUrlInput = document.querySelector(".modal__input_type_url");
+const cardTitleInput = document.querySelector("#add-modal-title-input");
+const cardUrlInput = document.querySelector("#cardUrlInput");
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
@@ -28,11 +28,19 @@ function fillProfileForm() {
   profileTitleInput.value = name;
   profileDescriptionInput.value = job;
 }
+function handleProfileEditSubmit(event) {
+  event.preventDefault(); // Prevent the form from submitting and refreshing the page
 
-function handleProfileEditSubmit(formData) {
+  const formData = {
+    name: profileTitleInput.value,
+    job: profileDescriptionInput.value,
+  };
+
   userInfo.setUserInfo(formData);
   profileEditPopup.close();
 }
+const profileEditForm = document.querySelector(".modal__form");
+profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
 function handleAddCardFormSubmit() {
   const cardData = {
