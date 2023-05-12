@@ -1,13 +1,14 @@
+// Import statements
 import FormValidator from "../components/FormValidator";
 import Card from "../components/Card";
 import { initialCards } from "../components/constants.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import "./index.css";
 import ImagePopup from "../components/ImagePopup.js";
+import "./index.css";
 
-// Elements
+// DOM Elements
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileTitleInput = document.querySelector("#profile-title-input");
 const profileDescriptionInput = document.querySelector(
@@ -18,18 +19,21 @@ const cardListEl = document.querySelector(".card__list");
 const cardTitleInput = document.querySelector("#add-modal-title-input");
 const cardUrlInput = document.querySelector("#cardUrlInput");
 
+// User Info
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
 });
 
+// Profile Edit Form
 function fillProfileForm() {
   const { name, job } = userInfo.getUserInfo();
   profileTitleInput.value = name;
   profileDescriptionInput.value = job;
 }
+
 function handleProfileEditSubmit(event) {
-  event.preventDefault(); // Prevent the form from submitting and refreshing the page
+  event.preventDefault();
 
   const formData = {
     name: profileTitleInput.value,
@@ -39,9 +43,11 @@ function handleProfileEditSubmit(event) {
   userInfo.setUserInfo(formData);
   profileEditPopup.close();
 }
+
 const profileEditForm = document.querySelector(".modal__form");
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
+// Add Card Form
 function handleAddCardFormSubmit() {
   const cardData = {
     name: cardTitleInput.value,
@@ -53,6 +59,7 @@ function handleAddCardFormSubmit() {
   addCardPopup.close();
 }
 
+// Popup Initialization
 const profileEditPopup = new PopupWithForm(
   "#profile-edit-modal",
   handleProfileEditSubmit
@@ -62,6 +69,7 @@ profileEditPopup.setEventListeners();
 const addCardPopup = new PopupWithForm("#add-modal", handleAddCardFormSubmit);
 addCardPopup.setEventListeners();
 
+// Event Listeners
 profileEditButton.addEventListener("click", () => {
   fillProfileForm();
   profileEditPopup.open();
@@ -72,6 +80,7 @@ addNewCardButton.addEventListener("click", () => {
   addCardPopup.open();
 });
 
+// Card-related Functions
 function openImageModal(cardData) {
   imagePopup.open(cardData);
 }
@@ -81,6 +90,7 @@ function createCard(cardData) {
   return card.generateCard();
 }
 
+// Card Section
 const cardList = new Section(
   {
     items: initialCards,
@@ -94,6 +104,7 @@ const cardList = new Section(
 
 cardList.renderItems();
 
+// Form Validation Configurations
 const config = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
@@ -103,9 +114,11 @@ const config = {
   errorClass: "modal__error_visible",
 };
 
+// Image Popup
 const imagePopup = new ImagePopup("#preview__image-modal");
 imagePopup.setEventListeners();
 
+// Form Validators
 const profileEditFormValidator = new FormValidator(
   config,
   document.querySelector("#profile-edit-modal form")
