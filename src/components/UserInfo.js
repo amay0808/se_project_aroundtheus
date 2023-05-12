@@ -2,9 +2,8 @@ class UserInfo {
   constructor({ nameSelector, jobSelector }) {
     this._nameElement = document.querySelector(nameSelector);
     this._jobElement = document.querySelector(jobSelector);
-    this._nameInput = document.querySelector("#profile-title-input");
-    this._jobInput = document.querySelector("#profile-description-input");
   }
+
   getUserInfo() {
     return {
       name: this._nameElement.textContent,

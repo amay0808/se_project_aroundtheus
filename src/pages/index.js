@@ -30,22 +30,10 @@ function fillProfileForm() {
   const { name, job } = userInfo.getUserInfo();
   profileTitleInput.value = name;
   profileDescriptionInput.value = job;
-}
-
-function handleProfileEditSubmit(event) {
-  event.preventDefault();
-
-  const formData = {
-    name: profileTitleInput.value,
-    job: profileDescriptionInput.value,
-  };
-
-  userInfo.setUserInfo(formData);
-  profileEditPopup.close();
+  profileEditPopup.open();
 }
 
 const profileEditForm = document.querySelector(".modal__form");
-profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
 // Add Card Form
 function handleAddCardFormSubmit() {
@@ -62,18 +50,18 @@ function handleAddCardFormSubmit() {
 // Popup Initialization
 const profileEditPopup = new PopupWithForm(
   "#profile-edit-modal",
-  handleProfileEditSubmit
+  (formData) => {
+    userInfo.setUserInfo(formData);
+  }
 );
+
 profileEditPopup.setEventListeners();
 
 const addCardPopup = new PopupWithForm("#add-modal", handleAddCardFormSubmit);
 addCardPopup.setEventListeners();
 
 // Event Listeners
-profileEditButton.addEventListener("click", () => {
-  fillProfileForm();
-  profileEditPopup.open();
-});
+profileEditButton.addEventListener("click", fillProfileForm);
 
 addNewCardButton.addEventListener("click", () => {
   addCardFormValidator.resetValidation();
