@@ -16,8 +16,8 @@ const profileDescriptionInput = document.querySelector(
 );
 const addNewCardButton = document.querySelector(".profile__add-button");
 const cardListEl = document.querySelector(".card__list");
-const cardTitleInput = document.querySelector("#add-modal-title-input");
-const cardUrlInput = document.querySelector("#cardUrlInput");
+// const cardTitleInput = document.querySelector("#add-modal-title-input");
+// const cardUrlInput = document.querySelector("#cardUrlInput");
 
 // User Info
 const userInfo = new UserInfo({
@@ -36,16 +36,16 @@ function fillProfileForm() {
 const profileEditForm = document.querySelector(".modal__form");
 
 // Add Card Form
-function handleAddCardFormSubmit() {
-  const cardData = {
-    name: cardTitleInput.value,
-    link: cardUrlInput.value,
-  };
+// function handleAddCardFormSubmit() {
+//   const cardData = {
+//     name: cardTitleInput.value,
+//     link: cardUrlInput.value,
+//   };
 
-  const cardElement = createCard(cardData);
-  cardList.addItem(cardElement);
-  addCardPopup.close();
-}
+//   const cardElement = createCard(cardData);
+//   cardList.addItem(cardElement);
+//   addCardPopup.close();
+// }
 
 // Popup Initialization
 const profileEditPopup = new PopupWithForm(
@@ -56,15 +56,22 @@ const profileEditPopup = new PopupWithForm(
 );
 
 profileEditPopup.setEventListeners();
+const addCardPopup = new PopupWithForm("#add-modal", (cardData) => {
+  const cardElement = createCard(cardData);
+  cardList.addItem(cardElement);
+});
 
-const addCardPopup = new PopupWithForm("#add-modal", handleAddCardFormSubmit);
+// const addCardPopup = new PopupWithForm("#add-modal", handleAddCardFormSubmit);
 addCardPopup.setEventListeners();
 
 // Event Listeners
 profileEditButton.addEventListener("click", fillProfileForm);
 
+// addNewCardButton.addEventListener("click", () => {
+//   addCardFormValidator.resetValidation();
+//   addCardPopup.open();
+// });
 addNewCardButton.addEventListener("click", () => {
-  addCardFormValidator.resetValidation();
   addCardPopup.open();
 });
 
