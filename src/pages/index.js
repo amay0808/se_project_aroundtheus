@@ -1,7 +1,7 @@
 // Import statements
 import FormValidator from "../components/FormValidator";
 import Card from "../components/Card";
-import { initialCards } from "../components/constants.js";
+import { initialCards } from "../utils/constants.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
