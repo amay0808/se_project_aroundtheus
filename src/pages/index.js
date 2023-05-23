@@ -1,4 +1,6 @@
 // Import statements
+import api from "../components/Api";
+
 import FormValidator from "../components/FormValidator";
 import Card from "../components/Card";
 import { initialCards } from "../utils/constants.js";
@@ -9,6 +11,8 @@ import ImagePopup from "../components/ImagePopup.js";
 import "./index.css";
 
 // DOM Elements
+const profileTitle = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileTitleInput = document.querySelector("#profile-title-input");
 const profileDescriptionInput = document.querySelector(
@@ -25,12 +29,30 @@ const userInfo = new UserInfo({
   jobSelector: ".profile__description",
 });
 
-// Profile Edit Form
+// // Creating an instance of the Api class
+// const api = new Api({
+//   baseUrl: "https://around.nomoreparties.co/v1/group-12",
+//   headers: {
+//     authorization: "c7f5c92f-7ce5-490b-8dc6-c25c01900635",
+//     "Content-Type": "application/json",
+//   },
+// });
 function fillProfileForm() {
-  const { name, job } = userInfo.getUserInfo();
-  profileTitleInput.value = name;
-  profileDescriptionInput.value = job;
-  profileEditPopup.open();
+  profileTitleInput.value = profileTitle.textContent;
+  profileDescriptionInput.value = profileDescription.textContent;
+}
+// // Profile Edit Form
+
+function handleProfileEditSubmit(formData) {
+  api
+    .editProfile(formData.name, formData.job)
+    .then((updatedInfo) => {
+      userInfo.setUserInfo(updatedInfo.name, updatedInfo.about);
+      profileEditPopup.close();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
 const profileEditForm = document.querySelector(".modal__form");
@@ -43,10 +65,6 @@ function handleAddCardFormSubmit(cardData) {
 }
 
 // Popup Initialization
-
-function handleProfileEditSubmit(formData) {
-  userInfo.setUserInfo(formData.name, formData.job);
-}
 
 const profileEditPopup = new PopupWithForm(
   "#profile-edit-modal",
@@ -64,6 +82,10 @@ profileEditButton.addEventListener("click", () => {
   fillProfileForm();
   profileEditPopup.open();
 });
+// profileEditButton.addEventListener("click", () => {
+//   fillProfileForm();
+//   openPopup(profileEditPopup);
+// });
 
 addNewCardButton.addEventListener("click", () => {
   addCardFormValidator.resetValidation();
@@ -120,3 +142,25 @@ const addCardFormValidator = new FormValidator(
   document.querySelector("#add-modal form")
 );
 addCardFormValidator.enableValidation();
+
+//call method
+api
+  .getInitialCards()
+  .then((data) => {
+    // data is the array of cards from the server
+    console.log(data);
+  })
+  .catch((error) => {
+    // handle any errors here
+    console.error(error);
+  });
+api
+  .getUserInfo()
+  .then((data) => {
+    // data is the user information from the server
+    console.log(data);
+  })
+  .catch((error) => {
+    // handle any errors here
+    console.error(error);
+  });
