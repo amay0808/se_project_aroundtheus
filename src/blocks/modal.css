@@ -149,6 +149,33 @@
 .modal__error_title-description {
   margin-top: 5px;
 }
+.modal__container-delete-card {
+  position: absolute;
+  background-color: #fff;
+  color: black;
+  margin: auto;
+  padding: 0;
+  padding-left: 36px;
+  padding-right: 36px;
+  padding-top: 0;
+  padding-bottom: 0;
+  width: 430px;
+  height: 181px;
+  left: 425px;
+  top: 270px;
+  border-radius: 10px;
+  max-width: 100%;
+  transition: opacity 0.3s linear;
+  visibility: visible;
+  z-index: 9999;
+}
+.modal__text-delete-card {
+  height: 23px;
+  width: 358px;
+  left: 461px;
+  top: 304px;
+  border-radius: 0;
+}
 
 @media screen and (min-width: 320px) and (max-width: 550px) {
   .modal__form {
