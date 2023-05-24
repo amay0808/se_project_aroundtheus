@@ -166,8 +166,6 @@
   height: 181px;
   border-radius: 10px;
   transition: opacity 0.3s linear;
-  visibility: visible;
-  z-index: 9999;
 }
 
 .modal__heading-delete-card {
