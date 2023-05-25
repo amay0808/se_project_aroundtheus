@@ -1,4 +1,4 @@
-class Api {
+class ApiClass {
   constructor(options) {
     this.baseUrl = options.baseUrl;
     this.headers = options.headers;
@@ -51,8 +51,14 @@ class Api {
       method: "DELETE",
       headers: this.headers,
     })
-      .then((res) => this._handleResponse(res))
-      .catch((err) => this._handleError(err));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete card");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   updateAvatar(avatarLink) {
@@ -96,8 +102,7 @@ class Api {
     console.error(err);
   }
 }
-
-const api = new Api({
+const api = new ApiClass({
   baseUrl: "https://around.nomoreparties.co/v1/group-12",
   headers: {
     authorization: "c7f5c92f-7ce5-490b-8dc6-c25c01900635",

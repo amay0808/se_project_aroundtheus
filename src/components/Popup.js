@@ -2,6 +2,7 @@ class Popup {
   constructor(popupSelector) {
     this._popupElement = document.querySelector(popupSelector);
     this._handleEscClose = this._handleEscClose.bind(this);
+    this._form = this._popupElement.querySelector(".modal__actions");
   }
 
   open() {
@@ -18,6 +19,13 @@ class Popup {
     if (evt.key === "Escape") {
       this.close();
     }
+  }
+
+  setSubmitHandler(handler) {
+    this._form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      handler();
+    });
   }
 
   setEventListeners() {
