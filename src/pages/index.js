@@ -116,7 +116,13 @@ function handleDeleteCardSubmit() {
 
 // Delete Card Form
 function createCard(cardData) {
-  const card = new Card(cardData, "#card-template", openImageModal);
+  const card = new Card(
+    cardData,
+    "#card-template",
+    openImageModal,
+    (cardId) => api.addLike(cardId),
+    (cardId) => api.removeLike(cardId)
+  );
 
   const cardElement = card.generateCard();
   const deleteButton = cardElement.querySelector(".card__delete-button");
@@ -174,33 +180,35 @@ function openImageModal(cardData) {
 }
 
 // Card Section
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: (cardData) => {
-      const cardElement = createCard(cardData);
-      cardList.addItem(cardElement);
-    },
-  },
-  ".card__list"
-);
+// const cardList = new Section(
+//   {
+//     items: initialCards,
+//     renderer: (cardData) => {
+//       const cardElement = createCard(cardData);
+//       cardList.addItem(cardElement);
+//     },
+//   },
+//   ".card__list"
+// );
 
-cardList.renderItems();
+// cardList.renderItems();
 
 // Call API methods
 api
   .getInitialCards()
   .then((data) => {
-    console.log(data);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+    const cardList = new Section(
+      {
+        items: data,
+        renderer: (cardData) => {
+          const cardElement = createCard(cardData);
+          cardList.addItem(cardElement);
+        },
+      },
+      ".card__list"
+    );
 
-api
-  .getUserInfo()
-  .then((data) => {
-    console.log(data);
+    cardList.renderItems();
   })
   .catch((error) => {
     console.error(error);
