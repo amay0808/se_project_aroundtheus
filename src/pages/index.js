@@ -144,23 +144,35 @@ function createCard(cardData) {
   const cardElement = card.generateCard();
   const deleteButton = cardElement.querySelector(".card__delete-button");
 
-  if (deleteButton) {
-    deleteButton.addEventListener("click", () => {
-      const cardElement = deleteButton.closest(".card");
-      const cardId = cardElement.dataset.cardId;
-      document.getElementById("delete-modal-card-id").value = cardId;
+  api
+    .getUserInfo()
+    .then((userInfo) => {
+      // Check if the current user is the owner of the card
+      if (userInfo._id === cardData.owner._id) {
+        deleteButton.style.display = "block";
+        deleteButton.addEventListener("click", () => {
+          const cardElement = deleteButton.closest(".card");
+          const cardId = cardElement.dataset.cardId;
+          document.getElementById("delete-modal-card-id").value = cardId;
 
-      deleteCardPopup.setSubmitHandler(() => {
-        deleteCard(cardElement, cardId);
-      });
+          deleteCardPopup.setSubmitHandler(() => {
+            deleteCard(cardElement, cardId);
+          });
 
-      deleteCardPopup.open();
+          deleteCardPopup.open();
+        });
+      } else {
+        deleteButton.style.display = "none";
+      }
+    })
+    .catch((error) => {
+      console.error(`Failed to get user info: ${error}`);
     });
-  }
 
-  // Return the cardElement inside the createCard function
   return cardElement;
 }
+
+// Return the cardElement inside the createCard function
 
 function deleteCard(cardElement, cardId) {
   api

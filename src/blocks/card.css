@@ -71,6 +71,7 @@
   margin-left: 249px;
   margin-top: 18px;
   margin-right: 15px;
+  display: none;
 }
 .card__delete-button:hover {
   opacity: 0.8;
