@@ -12,6 +12,7 @@ export default class Card {
     if (!cardData._id) {
       throw new Error("Card id is not defined");
     }
+    this._id = cardData._id;
     this._cardData = cardData;
     this._cardTemplateSelector = cardTemplateSelector;
     this._openImageModal = () => openImageModal(this._cardData);

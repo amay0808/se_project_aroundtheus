@@ -13,6 +13,9 @@ class Api {
 
   _handleError(error) {
     console.error(error);
+    if (error instanceof Response) {
+      error.json().then((data) => console.log(data));
+    }
   }
 
   getUserInfo() {
@@ -26,13 +29,21 @@ class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/v1/${this._headers.group}/cards`, {
+    return fetch("https://around.nomoreparties.co/v1/group-12/cards", {
       headers: {
-        authorization: this._headers.authorization,
+        authorization: "c7f5c92f-7ce5-490b-8dc6-c25c01900635",
       },
     })
-      .then(this._checkResponse)
-      .catch(this._handleError);
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // if the server returns an error, reject the promise
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   editProfile(name, about) {
@@ -63,8 +74,18 @@ class Api {
         link,
       }),
     })
-      .then(this._checkResponse)
-      .catch(this._handleError);
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            throw new Error(`Error: ${res.status} - ${data.message}`);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   deleteCard(cardId) {

@@ -76,10 +76,27 @@ const profileEditFormValidator = new FormValidator(
 profileEditFormValidator.enableValidation();
 
 // Add Card Form
-function handleAddCardFormSubmit(cardData) {
-  const cardElement = createCard(cardData);
-  cardList.addItem(cardElement);
-  addCardPopup.close();
+
+function handleAddCardFormSubmit(formData) {
+  console.log(formData);
+
+  const cardName = formData.name;
+  const cardLink = formData.link;
+
+  api
+    .addCard(cardName, cardLink)
+    .then((newCardData) => {
+      if (newCardData && newCardData._id) {
+        const cardElement = createCard(newCardData);
+        cardList.addItem(cardElement);
+        addCardPopup.close();
+      } else {
+        throw new Error("Invalid card data received from the server");
+      }
+    })
+    .catch((error) => {
+      console.error(`Failed to add card: ${error}`);
+    });
 }
 
 // PopupWithForm instance for Add Modal
@@ -179,25 +196,12 @@ function openImageModal(cardData) {
   imagePopup.open(cardData);
 }
 
-// Card Section
-// const cardList = new Section(
-//   {
-//     items: initialCards,
-//     renderer: (cardData) => {
-//       const cardElement = createCard(cardData);
-//       cardList.addItem(cardElement);
-//     },
-//   },
-//   ".card__list"
-// );
-
-// cardList.renderItems();
-
 // Call API methods
+let cardList;
 api
   .getInitialCards()
   .then((data) => {
-    const cardList = new Section(
+    cardList = new Section(
       {
         items: data,
         renderer: (cardData) => {
