@@ -27,26 +27,18 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
-            alt="avatar"
-            class="profile__image"
-          />
+          <div class="profile__avatar-container">
+            <img src="<%=require('./images/jacques-cousteau.jpg')%>" alt="avatar" class="profile__avatar" />
+            <img src="<%=require('./images/edit_profile_hover.png')%>" alt="hover-image" class="profile__hover-edit" />
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Jacques-Cousteau</h1>
-            <button
-              class="profile__edit-button"
-              id="profile-edit-button"
-              type="button"
-            ></button>
+            <button class="profile__edit-button" id="profile-edit-button" type="button"></button>
             <p class="profile__description">Explorer</p>
           </div>
-          <button
-            class="profile__add-button"
-            id="profile_add-button"
-            type="button"
-          ></button>
+          <button class="profile__add-button" id="profile_add-button" type="button"></button>
         </section>
+      </main>      
         <section class="card page__section">
           <ul class="card__list"></ul>
         </section>

@@ -72,14 +72,50 @@
   overflow: hidden;
   max-width: 100%;
 }
-.profile__image {
+
+.profile__avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile__avatar-container:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: 0.2s ease-in-out;
+}
+.profile__avatar-container:hover:before {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.profile__avatar {
   border-radius: 50%;
-  height: 120px;
-  width: 120px;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
   background-position: center;
   margin-right: 24px;
 }
+
+.profile__hover-edit {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.profile__avatar-container:hover .profile__hover-edit {
+  opacity: 1;
+}
+
 @media screen and (min-width: 320px) and (max-width: 900px) {
   .profile {
     flex-direction: column;
