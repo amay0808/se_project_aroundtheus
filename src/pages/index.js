@@ -147,22 +147,17 @@ function createCard(cardData) {
   api
     .getUserInfo()
     .then((userInfo) => {
-      // Check if the current user is the owner of the card
       if (userInfo._id === cardData.owner._id) {
-        deleteButton.style.display = "block";
+        deleteButton.classList.add("card__delete-button--visible");
         deleteButton.addEventListener("click", () => {
           const cardElement = deleteButton.closest(".card");
           const cardId = cardElement.dataset.cardId;
           document.getElementById("delete-modal-card-id").value = cardId;
 
-          deleteCardPopup.setSubmitHandler(() => {
-            deleteCard(cardElement, cardId);
-          });
-
           deleteCardPopup.open();
         });
       } else {
-        deleteButton.style.display = "none";
+        deleteButton.classList.remove("card__delete-button--visible");
       }
     })
     .catch((error) => {

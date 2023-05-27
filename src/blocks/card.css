@@ -72,7 +72,12 @@
   margin-top: 18px;
   margin-right: 15px;
   display: none;
+  z-index: 1;
 }
+.card__delete-button--visible {
+  display: inline-block; /* or 'block', depending on your layout needs */
+}
+
 .card__delete-button:hover {
   opacity: 0.8;
   cursor: pointer;
