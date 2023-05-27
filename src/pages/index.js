@@ -20,7 +20,11 @@ const addNewCardButton = document.querySelector(".profile__add-button");
 const cardListEl = document.querySelector(".card__list");
 const cardTitleInput = document.querySelector("#add-modal-title-input");
 const cardUrlInput = document.querySelector("#cardUrlInput");
-
+const avatarEditButton = document.querySelector(".profile__hover-edit");
+const avatarModal = document.querySelector("#edit-avatar-modal");
+const avatarModalCloseButton = document.querySelector(
+  "#edit-avatar-modal-close-button"
+);
 // Create an instance of the UserInfo class
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
@@ -46,6 +50,12 @@ function handleProfileEditSubmit(formData) {
       console.error(error);
     });
 }
+function openAvatarModal() {
+  avatarModal.classList.add("modal_opened");
+}
+
+//  event listener to avatar edit button
+avatarEditButton.addEventListener("click", openAvatarModal);
 
 // PopupWithForm instance for Edit Profile
 const profileEditPopup = new PopupWithForm(
@@ -59,6 +69,13 @@ profileEditButton.addEventListener("click", () => {
   fillProfileForm();
   profileEditPopup.open();
 });
+
+function closeAvatarModal() {
+  avatarModal.classList.remove("modal_opened");
+}
+
+// Adding event listener to close button
+avatarModalCloseButton.addEventListener("click", closeAvatarModal);
 
 // FormValidator instance for Edit Profile
 const formConfig = {

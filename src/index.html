@@ -142,6 +142,26 @@
         </form>
       </div>
     </div>
+    <!-- Edit Avatar Modal -->
+<div class="modal" id="edit-avatar-modal">
+  <div class="modal__container">
+    <button class="modal__close" id="edit-avatar-modal-close-button"></button>
+    <h2 class="modal__heading">Change Profile Picture</h2>
+    <form class="modal__form" id="edit-avatar-form">
+      <input
+        class="modal__input modal__input_type_url"
+        type="url"
+        placeholder="Image URL"
+        name="avatar"
+        id="avatar-url-input"
+        required
+      />
+      <span class="modal__error" id="avatar-url-input-error"></span>
+      <button class="modal__button modal__save-button" type="submit">Save</button>
+    </form>
+  </div>
+</div>
+
 
     <template id="card-template">
       <li class="card">
