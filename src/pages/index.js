@@ -114,11 +114,18 @@ const addCardFormValidator = new FormValidator(
   document.querySelector("#add-modal form")
 );
 addCardFormValidator.enableValidation();
-
 function handleDeleteCardSubmit() {
   const cardIdInput = document.getElementById("delete-modal-card-id");
   const cardId = cardIdInput.value;
   const cardElement = document.querySelector(`.card[data-card-id="${cardId}"]`);
+
+  console.log("cardId: ", cardId); // log cardId value
+  console.log("cardElement: ", cardElement); // log cardElement value
+
+  if (!cardId || !cardElement) {
+    console.error("Card ID or Card Element not found");
+    return;
+  }
 
   api
     .deleteCard(cardId)
@@ -133,6 +140,7 @@ function handleDeleteCardSubmit() {
 
 // Delete Card Form
 function createCard(cardData) {
+  // console.log(cardData);
   const card = new Card(
     cardData,
     "#card-template",
@@ -152,6 +160,7 @@ function createCard(cardData) {
         deleteButton.addEventListener("click", () => {
           const cardElement = deleteButton.closest(".card");
           const cardId = cardElement.dataset.cardId;
+          console.log("Setting cardId: ", cardId);
           document.getElementById("delete-modal-card-id").value = cardId;
 
           deleteCardPopup.open();
@@ -208,6 +217,7 @@ let cardList;
 api
   .getInitialCards()
   .then((data) => {
+    console.log(data); // Add this line
     cardList = new Section(
       {
         items: data,

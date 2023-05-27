@@ -75,7 +75,7 @@
   z-index: 1;
 }
 .card__delete-button--visible {
-  display: inline-block; /* or 'block', depending on your layout needs */
+  display: inline-block;
 }
 
 .card__delete-button:hover {

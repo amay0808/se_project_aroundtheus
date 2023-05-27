@@ -69,7 +69,11 @@ export default class Card {
   }
 
   generateCard() {
-    this._cardElement = this._getElement();
+    const cardTemplate = document.querySelector(this._cardTemplateSelector);
+    const cardElement = cardTemplate.content.cloneNode(true);
+
+    cardElement.querySelector(".card").dataset.cardId = this._id;
+    this._cardElement = cardElement;
     this._cardImageEl = this._cardElement.querySelector(".card__image");
     this._cardTitleEl = this._cardElement.querySelector(".card__title");
     this._likeButton = this._cardElement.querySelector(".card__like-button");
