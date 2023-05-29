@@ -25,6 +25,25 @@ const avatarModal = document.querySelector("#edit-avatar-modal");
 const avatarModalCloseButton = document.querySelector(
   "#edit-avatar-modal-close-button"
 );
+const addModalCreateButton = document.getElementById(
+  "edit-profile-create-button"
+);
+addModalCreateButton.addEventListener("click", function () {
+  // Change the text of the button
+  addModalCreateButton.textContent = "Creating...";
+});
+
+// Select the button
+const editProfileSaveButton = document.getElementById(
+  "edit-profile-save-button"
+);
+
+// Add an event listener to the button
+editProfileSaveButton.addEventListener("click", function () {
+  // Change the text of the button
+  editProfileSaveButton.textContent = "Saving...";
+});
+
 // Create an instance of the UserInfo class
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
