@@ -141,6 +141,7 @@ class Api {
       .then(this._checkResponse)
       .catch(this._handleError);
   }
+
   getCardLikes(cardId) {
     return fetch(`${this._baseUrl}/v1/${this._headers.group}/cards/${cardId}`, {
       headers: {

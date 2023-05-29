@@ -25,6 +25,9 @@ const avatarModal = document.querySelector("#edit-avatar-modal");
 const avatarModalCloseButton = document.querySelector(
   "#edit-avatar-modal-close-button"
 );
+const avatarForm = document.querySelector("#edit-avatar-form");
+const avatarUrlInput = document.querySelector("#avatar-url-input");
+
 const addModalCreateButton = document.getElementById(
   "edit-profile-create-button"
 );
@@ -34,17 +37,16 @@ addModalCreateButton.addEventListener("click", function () {
 });
 
 // Select the button
-const editProfileSaveButton = document.getElementById(
-  "edit-profile-save-button"
-);
+// Select the button
+const editAvatarSaveButton = document.querySelector("#edit-avatar-save-button");
 
 // Add an event listener to the button
-editProfileSaveButton.addEventListener("click", function () {
+editAvatarSaveButton.addEventListener("click", function () {
   // Change the text of the button
-  editProfileSaveButton.textContent = "Saving...";
+  editAvatarSaveButton.textContent = "Saving...";
 });
 
-// Create an instance of the UserInfo class
+// instance of the UserInfo class
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
@@ -72,6 +74,26 @@ function handleProfileEditSubmit(formData) {
 function openAvatarModal() {
   avatarModal.classList.add("modal_opened");
 }
+//updateAvatar method call
+
+avatarForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const avatarUrl = avatarUrlInput.value;
+
+  api
+    .updateAvatar(avatarUrl)
+    .then(() => {
+      // Update the image source of the avatar image
+      const avatarImage = document.querySelector(".profile__avatar");
+      avatarImage.src = avatarUrl;
+
+      console.log("Avatar updated successfully");
+    })
+    .catch((error) => {
+      console.error(`Failed to update avatar: ${error}`);
+    });
+});
 
 //  event listener to avatar edit button
 avatarEditButton.addEventListener("click", openAvatarModal);
