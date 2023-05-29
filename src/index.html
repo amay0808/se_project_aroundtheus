@@ -28,21 +28,37 @@
       <main class="content">
         <section class="profile page__section">
           <div class="profile__avatar-container">
-            <img src="<%=require('./images/jacques-cousteau.jpg')%>" alt="avatar" class="profile__avatar" />
-            <img src="<%=require('./images/edit_profile_hover.png')%>" alt="hover-image" class="profile__hover-edit" />
+            <img
+              src="<%=require('./images/jacques-cousteau.jpg')%>"
+              alt="avatar"
+              class="profile__avatar"
+            />
+            <img
+              src="<%=require('./images/edit_profile_hover.png')%>"
+              alt="hover-image"
+              class="profile__hover-edit"
+            />
           </div>
           <div class="profile__info">
             <h1 class="profile__title">Jacques-Cousteau</h1>
-            <button class="profile__edit-button" id="profile-edit-button" type="button"></button>
+            <button
+              class="profile__edit-button"
+              id="profile-edit-button"
+              type="button"
+            ></button>
             <p class="profile__description">Explorer</p>
           </div>
-          <button class="profile__add-button" id="profile_add-button" type="button"></button>
-        </section>
-      </main>      
-        <section class="card page__section">
-          <ul class="card__list"></ul>
+          <button
+            class="profile__add-button"
+            id="profile_add-button"
+            type="button"
+          ></button>
         </section>
       </main>
+      <section class="card page__section">
+        <ul class="card__list"></ul>
+      </section>
+
       <footer class="footer page__section">
         <p class="footer__copyright">&copy; 2022 Around The U.S</p>
       </footer>
@@ -78,8 +94,13 @@
             class="modal__error"
             id="profile-description-input-error"
           ></span>
-          <button class="modal__button modal__save-button" id="edit-profile-save-button" type="submit">Save</button>
-
+          <button
+            class="modal__button modal__save-button"
+            id="edit-profile-save-button"
+            type="submit"
+          >
+            Save
+          </button>
         </form>
       </div>
     </div>
@@ -111,8 +132,13 @@
             required
           />
           <span class="modal__error" id="cardUrlInput-error"></span>
-          <button class="modal__button modal__save-button" id="edit-profile-create-button" type="submit">Create</button>
-
+          <button
+            class="modal__button modal__save-button"
+            id="edit-profile-create-button"
+            type="submit"
+          >
+            Create
+          </button>
         </form>
       </div>
     </div>
@@ -144,27 +170,34 @@
         </form>
       </div>
     </div>
-   <!-- Edit Avatar Modal -->
-<div class="modal" id="edit-avatar-modal">
-  <div class="modal__container">
-    <button class="modal__close" id="edit-avatar-modal-close-button"></button>
-    <h2 class="modal__heading">Change Profile Picture</h2>
-    <form class="modal__form" id="edit-avatar-form">
-      <input
-        class="modal__input modal__input_type_url"
-        type="url"
-        placeholder="Image URL"
-        name="avatar"
-        id="avatar-url-input"
-        required
-      />
-      <span class="modal__error" id="avatar-url-input-error"></span>
-      <button class="modal__button modal__save-button" id="edit-avatar-save-button" type="submit">Save</button>
-    </form>
-  </div>
-</div>
-
-
+    <!-- Edit Avatar Modal -->
+    <div class="modal" id="edit-avatar-modal">
+      <div class="modal__container">
+        <button
+          class="modal__close"
+          id="edit-avatar-modal-close-button"
+        ></button>
+        <h2 class="modal__heading">Change Profile Picture</h2>
+        <form class="modal__form" id="edit-avatar-form">
+          <input
+            class="modal__input modal__input_type_url"
+            type="url"
+            placeholder="Image URL"
+            name="avatar"
+            id="avatar-url-input"
+            required
+          />
+          <span class="modal__error" id="avatar-url-input-error"></span>
+          <button
+            class="modal__button modal__save-button"
+            id="edit-avatar-save-button"
+            type="submit"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
 
     <template id="card-template">
       <li class="card">
