@@ -37,7 +37,6 @@ addModalCreateButton.addEventListener("click", function () {
 });
 
 // Select the button
-// Select the button
 const editAvatarSaveButton = document.querySelector("#edit-avatar-save-button");
 
 // Add an event listener to the button
@@ -50,17 +49,20 @@ editAvatarSaveButton.addEventListener("click", function () {
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
-  avatarSelector: ".profile__image",
+  avatarSelector: ".profile__avatar",
 });
 
 function fillProfileForm() {
   const profileInfo = userInfo.getUserInfo();
   profileTitleInput.value = profileInfo.name;
   profileDescriptionInput.value = profileInfo.job;
+  avatarUrlInput.value = profileInfo.avatar;
 }
 
 // Profile Edit Form
 function handleProfileEditSubmit(formData) {
+  profileEditPopup.showLoading();
+
   api
     .editProfile(formData.name, formData.job)
     .then((updatedInfo) => {
@@ -69,12 +71,15 @@ function handleProfileEditSubmit(formData) {
     })
     .catch((error) => {
       console.error(error);
+    })
+    .finally(() => {
+      profileEditPopup.hideLoading();
     });
 }
+
 function openAvatarModal() {
   avatarModal.classList.add("modal_opened");
 }
-//updateAvatar method call
 
 avatarForm.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -84,7 +89,6 @@ avatarForm.addEventListener("submit", function (event) {
   api
     .updateAvatar(avatarUrl)
     .then(() => {
-      // Update the image source of the avatar image
       const avatarImage = document.querySelector(".profile__avatar");
       avatarImage.src = avatarUrl;
 
@@ -92,25 +96,28 @@ avatarForm.addEventListener("submit", function (event) {
     })
     .catch((error) => {
       console.error(`Failed to update avatar: ${error}`);
+    })
+    .finally(() => {
+      avatarModal.classList.remove("modal_opened");
     });
 });
 
-//  event listener to avatar edit button
+// event listener for avatar edit button
 avatarEditButton.addEventListener("click", openAvatarModal);
 
 // PopupWithForm instance for Edit Profile
 const profileEditPopup = new PopupWithForm(
   "#profile-edit-modal",
-  handleProfileEditSubmit
+  handleProfileEditSubmit,
+  "Saving..."
 );
 profileEditPopup.setEventListeners();
 
-// Event Listener for Profile Edit button
+// event listener for profile edit button
 profileEditButton.addEventListener("click", () => {
   fillProfileForm();
   profileEditPopup.open();
 });
-
 function closeAvatarModal() {
   avatarModal.classList.remove("modal_opened");
 }
