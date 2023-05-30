@@ -1,4 +1,4 @@
-import api from "../components/Api";
+import api from "../utils/Api";
 import FormValidator from "../components/FormValidator";
 import Card from "../components/Card";
 import { initialCards } from "../utils/constants.js";
