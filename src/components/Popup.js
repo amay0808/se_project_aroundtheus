@@ -21,12 +21,12 @@ class Popup {
     }
   }
 
-  setSubmitHandler(handler) {
-    this._form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      handler();
-    });
-  }
+  // setSubmitHandler(handler) {
+  //   this._form.addEventListener("submit", (event) => {
+  //     event.preventDefault();
+  //     handler();
+  //   });
+  // }
 
   setEventListeners() {
     this._popupElement.addEventListener("click", (e) => {
