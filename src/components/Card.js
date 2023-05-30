@@ -28,31 +28,38 @@ export default class Card {
     if (!likeButtonIsActive) {
       this._handleLike(this._cardData._id)
         .then((newCardData) => {
-          if (!newCardData) {
-            throw new Error("New card data is not defined");
-          }
-          if (!newCardData.likes) {
-            throw new Error("Likes property is not defined on new card data");
-          }
-          this._likeButton.classList.add("card__like-button_active");
-          this._likeCount.textContent = newCardData.likes.length;
+          this._renderLikes(newCardData);
         })
         .catch((err) => console.error(err));
     } else {
       this._handleUnlike(this._cardData._id)
         .then((newCardData) => {
-          if (!newCardData) {
-            throw new Error("New card data is not defined");
-          }
-          if (!newCardData.likes) {
-            throw new Error("Likes property is not defined on new card data");
-          }
-          this._likeButton.classList.remove("card__like-button_active");
-          this._likeCount.textContent = newCardData.likes.length;
+          this._renderLikes(newCardData);
         })
         .catch((err) => console.error(err));
     }
   };
+
+  _renderLikes(newCardData) {
+    if (!newCardData) {
+      throw new Error("New card data is not defined");
+    }
+    if (!newCardData.likes) {
+      throw new Error("Likes property is not defined on new card data");
+    }
+
+    const likeButtonIsActive = this._likeButton.classList.contains(
+      "card__like-button_active"
+    );
+
+    if (likeButtonIsActive) {
+      this._likeButton.classList.remove("card__like-button_active");
+    } else {
+      this._likeButton.classList.add("card__like-button_active");
+    }
+
+    this._likeCount.textContent = newCardData.likes.length;
+  }
 
   _setEventListeners() {
     this._likeButton.addEventListener("click", this._toggleLike);
