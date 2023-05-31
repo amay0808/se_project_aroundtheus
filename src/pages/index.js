@@ -31,21 +31,8 @@ const avatarUrlInput = document.querySelector("#avatar-url-input");
 const addModalCreateButton = document.getElementById(
   "edit-profile-create-button"
 );
-addModalCreateButton.addEventListener("click", function () {
-  // Change the text of the button
-  addModalCreateButton.textContent = "Creating...";
-});
 
-// Select the button
-const editAvatarSaveButton = document.querySelector("#edit-avatar-save-button");
-
-// Add an event listener to the button
-editAvatarSaveButton.addEventListener("click", function () {
-  // Change the text of the button
-  editAvatarSaveButton.textContent = "Saving...";
-});
-
-// instance of the UserInfo class
+// Instance of the UserInfo class
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
@@ -77,33 +64,33 @@ function handleProfileEditSubmit(formData) {
     });
 }
 
-function openAvatarModal() {
-  avatarModal.classList.add("modal_opened");
-}
-
-avatarForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  const avatarUrl = avatarUrlInput.value;
+function handleAvatarFormSubmit(formData) {
+  avatarPopup.showLoading();
 
   api
-    .updateAvatar(avatarUrl)
+    .updateAvatar(formData.avatar)
     .then(() => {
-      const avatarImage = document.querySelector(".profile__avatar");
-      avatarImage.src = avatarUrl;
-
-      console.log("Avatar updated successfully");
+      userInfo.setAvatar(formData.avatar);
+      avatarPopup.close();
     })
     .catch((error) => {
       console.error(`Failed to update avatar: ${error}`);
     })
     .finally(() => {
-      avatarModal.classList.remove("modal_opened");
+      avatarPopup.hideLoading();
     });
-});
+}
 
-// event listener for avatar edit button
-avatarEditButton.addEventListener("click", openAvatarModal);
+// PopupWithForm instance for Edit Avatar
+const avatarPopup = new PopupWithForm(
+  "#edit-avatar-modal",
+  handleAvatarFormSubmit,
+  "Saving..."
+);
+avatarPopup.setEventListeners();
+
+// Event listener for avatar edit button
+avatarEditButton.addEventListener("click", () => avatarPopup.open());
 
 // PopupWithForm instance for Edit Profile
 const profileEditPopup = new PopupWithForm(
@@ -113,11 +100,12 @@ const profileEditPopup = new PopupWithForm(
 );
 profileEditPopup.setEventListeners();
 
-// event listener for profile edit button
+// Event listener for profile edit button
 profileEditButton.addEventListener("click", () => {
   fillProfileForm();
   profileEditPopup.open();
 });
+
 function closeAvatarModal() {
   avatarModal.classList.remove("modal_opened");
 }
@@ -170,6 +158,7 @@ addCardPopup.setEventListeners();
 
 // Event Listener for Add Card button
 addNewCardButton.addEventListener("click", () => {
+  addCardPopup.disableSubmitButton(); // Disable the submit button
   addCardPopup.open();
 });
 
@@ -179,13 +168,14 @@ const addCardFormValidator = new FormValidator(
   document.querySelector("#add-modal form")
 );
 addCardFormValidator.enableValidation();
+
 function handleDeleteCardSubmit() {
   const cardIdInput = document.getElementById("delete-modal-card-id");
   const cardId = cardIdInput.value;
   const cardElement = document.querySelector(`.card[data-card-id="${cardId}"]`);
 
-  console.log("cardId: ", cardId); // log cardId value
-  console.log("cardElement: ", cardElement); // log cardElement value
+  console.log("cardId: ", cardId); // Log cardId value
+  console.log("cardElement: ", cardElement); // Log cardElement value
 
   if (!cardId || !cardElement) {
     console.error("Card ID or Card Element not found");
@@ -205,7 +195,6 @@ function handleDeleteCardSubmit() {
 
 // Delete Card Form
 function createCard(cardData) {
-  // console.log(cardData);
   const card = new Card(
     cardData,
     "#card-template",
