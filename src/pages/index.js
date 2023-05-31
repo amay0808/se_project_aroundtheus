@@ -34,33 +34,16 @@ document.addEventListener("DOMContentLoaded", () => {
     "edit-profile-create-button"
   );
 
-  // // Fetching user info once and storing it in userInfoData
-  // api
-  //   .getUserInfo()
-  //   .then((data) => {
-  //     userInfoData = data; // save user data for later use
-  //   })
-  //   .catch((error) => {
-  //     console.error(`Failed to get user info: ${error}`);
-  //   });
-
   // Instance of the UserInfo class
   const userInfo = new UserInfo({
     nameSelector: ".profile__title",
     jobSelector: ".profile__description",
     avatarSelector: ".profile__avatar",
   });
-  // Fetching user info once and storing it in userInfoData
-  api
-    .getUserInfo()
-    .then((data) => {
-      userInfoData = data; // save user data for later use
-      userInfo.setUserInfo(data.name, data.about);
-      userInfo.setAvatar(data.avatar);
-    })
-    .catch((error) => {
-      console.error(`Failed to get user info: ${error}`);
-    });
+  const profileData = userInfo.getUserInfo();
+  // console.log(profileData);
+  //Fetching user info once and storing it in userInfoData
+
   // Profile Edit Form
   function handleProfileEditSubmit(formData) {
     profileEditPopup.showLoading();
@@ -155,7 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cardElement = card.generateCard();
     const deleteButton = cardElement.querySelector(".card__delete-button");
-
+    userInfoData = profileData; // save user data for later use
+    userInfo.setUserInfo(profileData.name, profileData.about);
+    userInfo.setAvatar(profileData.avatar);
+    userInfoData = profileData;
     if (userInfoData._id === cardData.owner._id) {
       deleteButton.classList.add("card__delete-button--visible");
       deleteButton.addEventListener("click", () => {
@@ -166,7 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteCardPopup.open();
       });
     } else {
-      deleteButton.classList.remove("card__delete-button--visible");
+      // remove the delete button from the DOM
+      deleteButton.parentNode.removeChild(deleteButton);
     }
 
     return cardElement;
