@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add Card Form
   function handleAddCardFormSubmit(formData) {
+    addCardPopup.showLoading();
     api
       .addCard(formData.name, formData.link)
       .then((newCardData) => {
@@ -90,6 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch((error) => {
         console.error(`Failed to add card: ${error}`);
+      })
+      .finally(() => {
+        addCardPopup.hideLoading();
       });
   }
 
@@ -212,7 +216,12 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   profileEditPopup.setEventListeners();
 
-  const addCardPopup = new PopupWithForm("#add-modal", handleAddCardFormSubmit);
+  // PopupWithForm instance for Add Modal
+  const addCardPopup = new PopupWithForm(
+    "#add-modal",
+    handleAddCardFormSubmit,
+    "Saving..."
+  );
   addCardPopup.setEventListeners();
 
   const deleteCardPopup = new PopupWithForm(
