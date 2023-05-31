@@ -8,6 +8,8 @@ import UserInfo from "../components/UserInfo.js";
 import ImagePopup from "../components/ImagePopup.js";
 import "./index.css";
 
+let userInfoData; // Variable to store user info
+
 document.addEventListener("DOMContentLoaded", () => {
   // DOM Elements
   const profileTitle = document.querySelector(".profile__title");
@@ -32,13 +34,33 @@ document.addEventListener("DOMContentLoaded", () => {
     "edit-profile-create-button"
   );
 
+  // // Fetching user info once and storing it in userInfoData
+  // api
+  //   .getUserInfo()
+  //   .then((data) => {
+  //     userInfoData = data; // save user data for later use
+  //   })
+  //   .catch((error) => {
+  //     console.error(`Failed to get user info: ${error}`);
+  //   });
+
   // Instance of the UserInfo class
   const userInfo = new UserInfo({
     nameSelector: ".profile__title",
     jobSelector: ".profile__description",
     avatarSelector: ".profile__avatar",
   });
-
+  // Fetching user info once and storing it in userInfoData
+  api
+    .getUserInfo()
+    .then((data) => {
+      userInfoData = data; // save user data for later use
+      userInfo.setUserInfo(data.name, data.about);
+      userInfo.setAvatar(data.avatar);
+    })
+    .catch((error) => {
+      console.error(`Failed to get user info: ${error}`);
+    });
   // Profile Edit Form
   function handleProfileEditSubmit(formData) {
     profileEditPopup.showLoading();
@@ -134,25 +156,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const cardElement = card.generateCard();
     const deleteButton = cardElement.querySelector(".card__delete-button");
 
-    api
-      .getUserInfo()
-      .then((userInfo) => {
-        if (userInfo._id === cardData.owner._id) {
-          deleteButton.classList.add("card__delete-button--visible");
-          deleteButton.addEventListener("click", () => {
-            const cardElement = deleteButton.closest(".card");
-            const cardId = cardElement.dataset.cardId;
-            document.getElementById("delete-modal-card-id").value = cardId;
+    if (userInfoData._id === cardData.owner._id) {
+      deleteButton.classList.add("card__delete-button--visible");
+      deleteButton.addEventListener("click", () => {
+        const cardElement = deleteButton.closest(".card");
+        const cardId = cardElement.dataset.cardId;
+        document.getElementById("delete-modal-card-id").value = cardId;
 
-            deleteCardPopup.open();
-          });
-        } else {
-          deleteButton.classList.remove("card__delete-button--visible");
-        }
-      })
-      .catch((error) => {
-        console.error(`Failed to get user info: ${error}`);
+        deleteCardPopup.open();
       });
+    } else {
+      deleteButton.classList.remove("card__delete-button--visible");
+    }
 
     return cardElement;
   }
