@@ -7,11 +7,11 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import ImagePopup from "../components/ImagePopup.js";
 import "./index.css";
-
-let userInfoData; // Variable to store user info
+let userId; // Declare the userId variable
 
 document.addEventListener("DOMContentLoaded", () => {
   // DOM Elements
+  const avatarImageElement = document.querySelector(".profile__avatar");
   const profileTitle = document.querySelector(".profile__title");
   const profileDescription = document.querySelector(".profile__description");
   const profileEditButton = document.querySelector("#profile-edit-button");
@@ -35,14 +35,33 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   // Instance of the UserInfo class
-  const userInfo = new UserInfo({
-    nameSelector: ".profile__title",
-    jobSelector: ".profile__description",
-    avatarSelector: ".profile__avatar",
-  });
-  const profileData = userInfo.getUserInfo();
-  // console.log(profileData);
-  //Fetching user info once and storing it in userInfoData
+  let userInfo;
+
+  api
+    .getUserInfo()
+    .then((userInfoData) => {
+      userInfo = new UserInfo({
+        nameSelector: ".profile__title",
+        jobSelector: ".profile__description",
+        avatarSelector: ".profile__avatar",
+      });
+      userInfo.setUserInfo(userInfoData.name, userInfoData.about);
+      userInfo.setAvatar(userInfoData.avatar);
+      userId = userInfoData._id; // assuming the user id is stored in _id
+
+      // Update the avatar image
+      api
+        .updateAvatar(userInfoData.avatar)
+        .then(() => {
+          avatarImageElement.src = userInfoData.avatar;
+        })
+        .catch((error) => {
+          console.error(`Failed to update avatar: ${error}`);
+        });
+    })
+    .catch((error) => {
+      console.error(`Failed to get user info: ${error}`);
+    });
 
   // Profile Edit Form
   function handleProfileEditSubmit(formData) {
@@ -127,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Create Card Element
-  function createCard(cardData) {
+  function createCard(cardData, userId) {
     const card = new Card(
       cardData,
       "#card-template",
@@ -138,11 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cardElement = card.generateCard();
     const deleteButton = cardElement.querySelector(".card__delete-button");
-    userInfoData = profileData; // save user data for later use
-    userInfo.setUserInfo(profileData.name, profileData.about);
-    userInfo.setAvatar(profileData.avatar);
-    userInfoData = profileData;
-    if (userInfoData._id === cardData.owner._id) {
+
+    if (userId === cardData.owner._id) {
       deleteButton.classList.add("card__delete-button--visible");
       deleteButton.addEventListener("click", () => {
         const cardElement = deleteButton.closest(".card");
@@ -152,7 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteCardPopup.open();
       });
     } else {
-      // remove the delete button from the DOM
       deleteButton.parentNode.removeChild(deleteButton);
     }
 
