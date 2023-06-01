@@ -3,9 +3,8 @@ export default class Card {
     cardData,
     cardTemplateSelector,
     openImageModal,
-    handleLike,
-    handleUnlike,
-    handleDelete
+    handleDelete,
+    userId
   ) {
     if (!cardData) {
       throw new Error("Card data is not defined");
@@ -17,56 +16,31 @@ export default class Card {
     this._cardData = cardData;
     this._cardTemplateSelector = cardTemplateSelector;
     this._openImageModal = () => openImageModal(this._cardData);
-    this._handleLike = handleLike;
-    this._handleUnlike = handleUnlike;
     this._handleDelete = handleDelete;
+    this._userId = userId; // Added userId to keep track of current user
+    this._likes = cardData.likes; // Added to store likes data locally
   }
-  _deleteCard = () => {
-    this._handleDelete(this._id);
-  };
-  _toggleLike = () => {
-    const likeButtonIsActive = this._likeButton.classList.contains(
-      "card__like-button_active"
-    );
 
-    if (!likeButtonIsActive) {
-      this._handleLike(this._cardData._id)
-        .then((newCardData) => {
-          this._renderLikes(newCardData);
-        })
-        .catch((err) => console.error(err));
-    } else {
-      this._handleUnlike(this._cardData._id)
-        .then((newCardData) => {
-          this._renderLikes(newCardData);
-        })
-        .catch((err) => console.error(err));
-    }
-  };
+  isLiked() {
+    // Method to check if the card is liked by the current user
+    return this._likes.some((like) => like._id === this._userId);
+  }
 
-  _renderLikes(newCardData) {
-    if (!newCardData) {
-      throw new Error("New card data is not defined");
-    }
-    if (!newCardData.likes) {
-      throw new Error("Likes property is not defined on new card data");
-    }
+  updateLikes(likes) {
+    // Method to update likes after API response
+    this._likes = likes;
+    this._renderLikes(); // Update like button and like count here
+  }
 
-    const likeButtonIsActive = this._likeButton.classList.contains(
-      "card__like-button_active"
-    );
+  _renderLikes() {
+    // Method to render likes count and toggle like button class
+    this._likeCount.textContent = this._likes.length;
 
-    if (likeButtonIsActive) {
-      this._likeButton.classList.remove("card__like-button_active");
-    } else {
+    if (this.isLiked()) {
       this._likeButton.classList.add("card__like-button_active");
+    } else {
+      this._likeButton.classList.remove("card__like-button_active");
     }
-
-    this._likeCount.textContent = newCardData.likes.length;
-    this._deleteButton = this._cardElement.querySelector(
-      ".card__delete-button"
-    );
-    // this._deleteButton.addEventListener("click", this._deleteCard);
   }
 
   _setEventListeners() {
@@ -85,18 +59,10 @@ export default class Card {
 
   generateCard() {
     const cardTemplate = document.querySelector(this._cardTemplateSelector);
-
-    // Debugging line: log the template's content
-    console.log("Template content:", cardTemplate.content);
-
     const cardElement = cardTemplate.content
       .querySelector(".card")
       .cloneNode(true);
 
-    // Debugging line: log the cloned element
-    console.log("Cloned element:", cardElement);
-
-    // Set card id to data attribute
     cardElement.dataset.cardId = this._cardData._id;
 
     this._cardElement = cardElement;
@@ -104,13 +70,16 @@ export default class Card {
     this._cardTitleEl = this._cardElement.querySelector(".card__title");
     this._likeButton = this._cardElement.querySelector(".card__like-button");
     this._likeCount = this._cardElement.querySelector(".card__like-count");
+    this._deleteButton = this._cardElement.querySelector(
+      ".card__delete-button"
+    );
 
     this._cardImageEl.src = this._cardData.link;
     this._cardImageEl.alt = this._cardData.name;
     this._cardTitleEl.textContent = this._cardData.name;
-    this._likeCount.textContent = this._cardData.likes.length;
 
     this._setEventListeners();
+    this._renderLikes(); // Rendering likes during card generation
 
     return this._cardElement;
   }
