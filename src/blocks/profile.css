@@ -10,7 +10,7 @@
   grid-template-areas:
     "title button"
     "description description";
-  grid-template-columns: minmax(auto 373) auto;
+  grid-template-columns: minmax(auto, 373px) auto;
   align-items: center;
 }
 
@@ -40,10 +40,7 @@
   cursor: pointer;
 }
 
-.profile__add-button:hover {
-  opacity: 0.6;
-}
-
+.profile__add-button:hover,
 .profile__edit-button:hover {
   opacity: 0.6;
 }
@@ -60,6 +57,7 @@
   overflow: hidden;
   max-width: 100%;
 }
+
 .profile__description {
   font-family: "Inter", Arial, sans-serif;
   font-size: 18px;
@@ -89,14 +87,13 @@
   background: rgba(0, 0, 0, 0);
   transition: 0.2s ease-in-out;
 }
+
 .profile__avatar-container:hover:before {
   background: rgba(0, 0, 0, 0.8);
 }
 
 .profile__avatar {
   border-radius: 50%;
-  height: 100%;
-  width: 100%;
   object-fit: cover;
   background-position: center;
   margin-right: 24px;
@@ -109,6 +106,7 @@
   height: 26px;
   position: absolute;
   top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
