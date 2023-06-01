@@ -11,6 +11,7 @@ let userId;
 let userInfo;
 
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM fully loaded and parsed");
   // DOM Elements
   const avatarImageElement = document.querySelector(".profile__avatar");
   const profileTitle = document.querySelector(".profile__title");
@@ -135,22 +136,26 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  function createCard(cardData) {
+  function createCard(cardData, userId) {
+    console.log(cardData);
     const card = new Card(
       cardData,
       "#card-template",
-      openImageModal,
+      openImageModal, // Move the function here
       (cardId) => api.addLike(cardId),
-      (cardId) => api.removeLike(cardId)
+      (cardId) => api.removeLike(cardId),
+      userId // Pass userId as argument
     );
 
     const cardElement = card.generateCard();
+    console.log("cardElement after generation:", cardElement);
+    cardElement.dataset.cardId = cardData._id;
     const deleteButton = cardElement.querySelector(".card__delete-button");
 
     if (userId === cardData.owner._id) {
       deleteButton.classList.add("card__delete-button--visible");
-      deleteButton.addEventListener("click", (event) => {
-        const cardId = event.currentTarget.closest(".card").dataset.cardId;
+      deleteButton.addEventListener("click", () => {
+        const cardId = cardElement.dataset.cardId;
         document.getElementById("delete-modal-card-id").value = cardId;
 
         deleteCardPopup.open();
@@ -164,6 +169,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function openImageModal(cardData) {
     imagePopup.open(cardData);
+  }
+
+  // Handle Card Like
+  function handleCardLike(cardId, isLiked) {
+    const card = cardList.getItem(cardId);
+    if (!card) {
+      console.error(`Card with ID ${cardId} not found`);
+      return;
+    }
+
+    if (isLiked) {
+      api
+        .removeLike(cardId)
+        .then((updatedCardData) => {
+          card.updateLikes(updatedCardData.likes);
+        })
+        .catch((error) => {
+          console.error(`Failed to remove like: ${error}`);
+        });
+    } else {
+      api
+        .addLike(cardId)
+        .then((updatedCardData) => {
+          card.updateLikes(updatedCardData.likes);
+        })
+        .catch((error) => {
+          console.error(`Failed to add like: ${error}`);
+        });
+    }
+  }
+
+  // Handle Card Delete
+  function handleCardDelete(cardId) {
+    const card = cardList.getItem(cardId);
+    if (!card) {
+      console.error(`Card with ID ${cardId} not found`);
+      return;
+    }
+
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        card.remove();
+      })
+      .catch((error) => {
+        console.error(`Failed to delete card: ${error}`);
+      });
   }
 
   // Event Listeners
@@ -242,12 +294,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let cardList;
   api
     .getInitialCards()
-    .then((data) => {
+    .then((cardData) => {
       cardList = new Section(
         {
-          items: data,
+          items: cardData,
           renderer: (cardData) => {
-            const cardElement = createCard(cardData);
+            const cardElement = createCard(cardData, userId);
             cardList.addItem(cardElement);
           },
         },

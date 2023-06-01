@@ -85,16 +85,24 @@ export default class Card {
 
   generateCard() {
     const cardTemplate = document.querySelector(this._cardTemplateSelector);
-    const cardElement = cardTemplate.content.cloneNode(true);
 
-    cardElement.querySelector(".card").dataset.cardId = this._id;
+    // Debugging line: log the template's content
+    console.log("Template content:", cardTemplate.content);
+
+    const cardElement = cardTemplate.content
+      .querySelector(".card")
+      .cloneNode(true);
+
+    // Debugging line: log the cloned element
+    console.log("Cloned element:", cardElement);
+
+    // Set card id to data attribute
+    cardElement.dataset.cardId = this._cardData._id;
+
     this._cardElement = cardElement;
     this._cardImageEl = this._cardElement.querySelector(".card__image");
     this._cardTitleEl = this._cardElement.querySelector(".card__title");
     this._likeButton = this._cardElement.querySelector(".card__like-button");
-    // this._deleteButton = this._cardElement.querySelector(
-    //   ".card__delete-button"
-    // );
     this._likeCount = this._cardElement.querySelector(".card__like-count");
 
     this._cardImageEl.src = this._cardData.link;
