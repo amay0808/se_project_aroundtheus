@@ -1,13 +1,14 @@
 import api from "../utils/Api";
 import FormValidator from "../components/FormValidator";
 import Card from "../components/Card";
-import { initialCards } from "../utils/constants.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import ImagePopup from "../components/ImagePopup.js";
 import "./index.css";
-let userId; // Declare the userId variable
+
+let userId;
+let userInfo;
 
 document.addEventListener("DOMContentLoaded", () => {
   // DOM Elements
@@ -35,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   // Instance of the UserInfo class
-  let userInfo;
 
   api
     .getUserInfo()
@@ -48,16 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
       userInfo.setUserInfo(userInfoData.name, userInfoData.about);
       userInfo.setAvatar(userInfoData.avatar);
       userId = userInfoData._id; // assuming the user id is stored in _id
-
-      // Update the avatar image
-      api
-        .updateAvatar(userInfoData.avatar)
-        .then(() => {
-          avatarImageElement.src = userInfoData.avatar;
-        })
-        .catch((error) => {
-          console.error(`Failed to update avatar: ${error}`);
-        });
     })
     .catch((error) => {
       console.error(`Failed to get user info: ${error}`);
@@ -145,8 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // Create Card Element
-  function createCard(cardData, userId) {
+  function createCard(cardData) {
     const card = new Card(
       cardData,
       "#card-template",
@@ -160,21 +149,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (userId === cardData.owner._id) {
       deleteButton.classList.add("card__delete-button--visible");
-      deleteButton.addEventListener("click", () => {
-        const cardElement = deleteButton.closest(".card");
-        const cardId = cardElement.dataset.cardId;
+      deleteButton.addEventListener("click", (event) => {
+        const cardId = event.currentTarget.closest(".card").dataset.cardId;
         document.getElementById("delete-modal-card-id").value = cardId;
 
         deleteCardPopup.open();
       });
     } else {
-      deleteButton.parentNode.removeChild(deleteButton);
+      deleteButton.remove();
     }
 
     return cardElement;
   }
 
-  // Open Image Modal
   function openImageModal(cardData) {
     imagePopup.open(cardData);
   }

@@ -4,7 +4,8 @@ export default class Card {
     cardTemplateSelector,
     openImageModal,
     handleLike,
-    handleUnlike
+    handleUnlike,
+    handleDelete
   ) {
     if (!cardData) {
       throw new Error("Card data is not defined");
@@ -18,8 +19,11 @@ export default class Card {
     this._openImageModal = () => openImageModal(this._cardData);
     this._handleLike = handleLike;
     this._handleUnlike = handleUnlike;
+    this._handleDelete = handleDelete;
   }
-
+  _deleteCard = () => {
+    this._handleDelete(this._id);
+  };
   _toggleLike = () => {
     const likeButtonIsActive = this._likeButton.classList.contains(
       "card__like-button_active"
@@ -59,6 +63,10 @@ export default class Card {
     }
 
     this._likeCount.textContent = newCardData.likes.length;
+    this._deleteButton = this._cardElement.querySelector(
+      ".card__delete-button"
+    );
+    // this._deleteButton.addEventListener("click", this._deleteCard);
   }
 
   _setEventListeners() {
@@ -84,9 +92,9 @@ export default class Card {
     this._cardImageEl = this._cardElement.querySelector(".card__image");
     this._cardTitleEl = this._cardElement.querySelector(".card__title");
     this._likeButton = this._cardElement.querySelector(".card__like-button");
-    this._deleteButton = this._cardElement.querySelector(
-      ".card__delete-button"
-    );
+    // this._deleteButton = this._cardElement.querySelector(
+    //   ".card__delete-button"
+    // );
     this._likeCount = this._cardElement.querySelector(".card__like-count");
 
     this._cardImageEl.src = this._cardData.link;
