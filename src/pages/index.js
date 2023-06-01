@@ -7,11 +7,6 @@ import UserInfo from "../components/UserInfo.js";
 import ImagePopup from "../components/ImagePopup.js";
 import "./index.css";
 
-let userId;
-let userInfo;
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   console.log("DOM fully loaded and parsed");
 // DOM Elements
 const avatarImageElement = document.querySelector(".profile__avatar");
 const profileTitle = document.querySelector(".profile__title");
@@ -37,21 +32,38 @@ const addModalCreateButton = document.getElementById(
 );
 
 // Instance of the UserInfo class
+let userId;
+let userInfo;
 
 api
-  .getUserInfo()
-  .then((userInfoData) => {
+  .loadData()
+  .then(({ userInfo: userInfoData, initialCards }) => {
     userInfo = new UserInfo({
       nameSelector: ".profile__title",
       jobSelector: ".profile__description",
       avatarSelector: ".profile__avatar",
     });
+
     userInfo.setUserInfo(userInfoData.name, userInfoData.about);
-    userInfo.setAvatar(userInfoData.avatar);
-    userId = userInfoData._id; // assuming the user id is stored in _id
+    userInfo.setAvatar(userInfoData.avatar); // Avatar is set once and not updated with profile info
+    userId = userInfoData._id;
+
+    // Card List
+    const cardList = new Section(
+      {
+        items: initialCards,
+        renderer: (cardData) => {
+          const cardElement = createCard(cardData, userId);
+          cardList.addItem(cardElement);
+        },
+      },
+      ".card__list"
+    );
+
+    cardList.renderItems();
   })
   .catch((error) => {
-    console.error(`Failed to get user info: ${error}`);
+    console.error(`Failed to get user info and initial cards: ${error}`);
   });
 
 // Profile Edit Form
@@ -61,6 +73,7 @@ function handleProfileEditSubmit(formData) {
   api
     .editProfile(formData.name, formData.job)
     .then((updatedInfo) => {
+      // Avatar is not updated here
       userInfo.setUserInfo(updatedInfo.name, updatedInfo.about);
       profileEditPopup.close();
     })
@@ -114,12 +127,15 @@ function handleAddCardFormSubmit(formData) {
 
 // Delete Card Form
 function handleDeleteCardSubmit() {
+  deleteCardPopup.showLoading(); // Show loading state
+
   const cardIdInput = document.getElementById("delete-modal-card-id");
   const cardId = cardIdInput.value;
   const cardElement = document.querySelector(`.card[data-card-id="${cardId}"]`);
 
   if (!cardId || !cardElement) {
     console.error("Card ID or Card Element not found");
+    deleteCardPopup.hideLoading(); // Hide loading state in case of error
     return;
   }
 
@@ -131,36 +147,23 @@ function handleDeleteCardSubmit() {
     })
     .catch((error) => {
       console.error(`Failed to delete card: ${error}`);
+    })
+    .finally(() => {
+      deleteCardPopup.hideLoading(); // Hide loading state when finished
     });
 }
-
 function createCard(cardData, userId) {
-  console.log(cardData);
   const card = new Card(
     cardData,
     "#card-template",
-    openImageModal, // Move the function here
+    openImageModal,
     (cardId) => api.addLike(cardId),
     (cardId) => api.removeLike(cardId),
-    userId // Pass userId as argument
+    (cardId) => handleCardDelete(cardId),
+    userId
   );
 
   const cardElement = card.generateCard();
-  console.log("cardElement after generation:", cardElement);
-  cardElement.dataset.cardId = cardData._id;
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-
-  if (userId === cardData.owner._id) {
-    deleteButton.classList.add("card__delete-button--visible");
-    deleteButton.addEventListener("click", () => {
-      const cardId = cardElement.dataset.cardId;
-      document.getElementById("delete-modal-card-id").value = cardId;
-
-      deleteCardPopup.open();
-    });
-  } else {
-    deleteButton.remove();
-  }
 
   return cardElement;
 }
@@ -198,16 +201,9 @@ function handleCardLike(cardId, isLiked) {
   }
 }
 
-// Handle Card Delete
-function handleCardDelete(cardId) {
-  const card = cardList.getItem(cardId);
-  if (!card) {
-    console.error(`Card with ID ${cardId} not found`);
-    return;
-  }
-
+function handleCardDelete(card) {
   api
-    .deleteCard(cardId)
+    .deleteCard(card.getId())
     .then(() => {
       card.remove();
     })
@@ -215,8 +211,6 @@ function handleCardDelete(cardId) {
       console.error(`Failed to delete card: ${error}`);
     });
 }
-
-// Event Listeners
 avatarEditButton.addEventListener("click", () => avatarPopup.open());
 
 profileEditButton.addEventListener("click", () => {
@@ -227,10 +221,11 @@ profileEditButton.addEventListener("click", () => {
 });
 
 avatarModalCloseButton.addEventListener("click", () => {
-  avatarModal.classList.remove("modal_opened");
+  avatarPopup.close();
 });
 
 addNewCardButton.addEventListener("click", () => {
+  addCardFormValidator.resetValidation(); // Reset form validation
   addCardPopup.open();
 });
 
@@ -254,6 +249,25 @@ const addCardFormValidator = new FormValidator(
   document.querySelector("#add-modal form")
 );
 addCardFormValidator.enableValidation();
+
+// Enable/disable submit button for Edit Profile modal
+const profileEditSubmitButton = document.querySelector(
+  "#edit-profile-save-button"
+);
+profileEditSubmitButton.disabled = true;
+
+const profileEditInputs = document.querySelectorAll(
+  "#profile-edit-modal .modal__input"
+);
+profileEditInputs.forEach((input) => {
+  input.addEventListener("input", () => {
+    if (profileEditFormValidator.isFormValid()) {
+      profileEditSubmitButton.disabled = false;
+    } else {
+      profileEditSubmitButton.disabled = true;
+    }
+  });
+});
 
 // Popup Instances
 const avatarPopup = new PopupWithForm(
