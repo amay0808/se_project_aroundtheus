@@ -1,7 +1,7 @@
 import PopupWithConfirmation from "./PopupWithConfirmation.js";
 
 export default class PopupWithForm extends PopupWithConfirmation {
-  constructor(popupSelector, handleSubmit, loadingButtonText) {
+  constructor(popupSelector, handleSubmit, loadingButtonText, api) {
     super(popupSelector);
     this._handleSubmit = handleSubmit;
     this._formElement = this._popupElement.querySelector("form");
@@ -10,6 +10,7 @@ export default class PopupWithForm extends PopupWithConfirmation {
     );
     this._buttonText = this._submitButton.textContent;
     this._loadingButtonText = loadingButtonText;
+    this._api = api;
   }
 
   showLoading() {
@@ -31,10 +32,14 @@ export default class PopupWithForm extends PopupWithConfirmation {
 
   setEventListeners() {
     super.setEventListeners();
+
     this._formElement.addEventListener("submit", (e) => {
       e.preventDefault();
+
       this.showLoading();
-      this._handleSubmit(this._getInputValues())
+
+      const inputValues = this._getInputValues();
+      Promise.resolve(this._handleSubmit(inputValues, this._api))
         .then(() => {
           this.close();
         })
@@ -45,10 +50,5 @@ export default class PopupWithForm extends PopupWithConfirmation {
           this.hideLoading();
         });
     });
-  }
-
-  close() {
-    super.close();
-    this._formElement.reset();
   }
 }

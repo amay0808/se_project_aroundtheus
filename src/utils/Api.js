@@ -6,21 +6,26 @@ class Api {
 
   _checkResponse(res) {
     if (res.ok) {
-      return res.json();
+      return res.json(); // Make sure it's returning the response body as JSON
     }
     return Promise.reject(`Error: ${res.status}`);
   }
 
+  _handleError(error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, { headers: this._headers }).then(
-      this._checkResponse
-    );
+    return fetch(`${this._baseUrl}/users/me`, { headers: this._headers })
+      .then(this._checkResponse)
+      .catch(this._handleError);
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, { headers: this._headers }).then(
-      this._checkResponse
-    );
+    return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
+      .then(this._checkResponse)
+      .catch(this._handleError);
   }
 
   editProfile(name, about) {
@@ -31,7 +36,9 @@ class Api {
         name,
         about,
       }),
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch(this._handleError);
   }
 
   addCard(name, link) {
@@ -42,28 +49,44 @@ class Api {
         name,
         link,
       }),
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch(this._handleError);
   }
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch(this._handleError);
   }
-
   addLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    }).then(this._checkResponse);
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Error: ${res.status}`);
+        }
+        return res.json(); // Make sure to return the parsed JSON data
+      })
+      .then((data) => {
+        console.log("Response data:", data); // Add this line
+        return data;
+      })
+      .catch(this._handleError);
   }
 
   removeLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch(this._handleError);
   }
 
   updateAvatar(avatarLink) {
@@ -73,15 +96,17 @@ class Api {
       body: JSON.stringify({
         avatar: avatarLink,
       }),
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .catch(this._handleError);
   }
 
   loadData() {
-    return Promise.all([this.getUserInfo(), this.getInitialCards()]).then(
-      ([userInfo, initialCards]) => {
+    return Promise.all([this.getUserInfo(), this.getInitialCards()])
+      .then(([userInfo, initialCards]) => {
         return { userInfo, initialCards };
-      }
-    );
+      })
+      .catch(this._handleError);
   }
 }
 
