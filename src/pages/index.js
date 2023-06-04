@@ -69,7 +69,7 @@ api
   });
 
 // Profile Edit Form
-function handleProfileEditSubmit(formData, api) {
+function handleProfileEditSubmit(formData) {
   profileEditPopup.showLoading();
 
   const nameInput = profileTitleInput;
@@ -90,7 +90,7 @@ function handleProfileEditSubmit(formData, api) {
 }
 
 // Avatar Form
-function handleAvatarFormSubmit(formData, api) {
+function handleAvatarFormSubmit(formData) {
   avatarPopup.showLoading();
 
   api
@@ -108,7 +108,7 @@ function handleAvatarFormSubmit(formData, api) {
 }
 
 // Add Card Form
-function handleAddCardFormSubmit(formData, api) {
+function handleAddCardFormSubmit(formData) {
   addCardPopup.showLoading();
   api
     .addCard(formData.name, formData.link)
@@ -140,6 +140,7 @@ function handleCardDelete(cardId) {
       console.error(`Failed to delete card: ${error}`);
     });
 }
+
 function createCard(cardData, userId) {
   console.log(cardData); // Log the cardData
 
@@ -149,7 +150,8 @@ function createCard(cardData, userId) {
     openImageModal,
     handleCardLike,
     handleCardDelete,
-    userId
+    userId,
+    cardList
   );
 
   const cardElement = card.generateCard();
@@ -162,37 +164,23 @@ function openImageModal(cardData) {
 }
 
 // Handle Card Like
-function handleCardLike(cardId) {
-  const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
-  if (!cardElement) {
-    console.error(`Card with ID ${cardId} not found`);
-    return;
-  }
-
-  const isLiked = cardElement.classList.contains("card__like-button_active");
-
-  if (isLiked) {
-    return api
-      .removeLike(cardId)
+function handleCardLike(card) {
+  if (card.isLiked()) {
+    api
+      .removeLike(card._id)
       .then((updatedCardData) => {
-        const likesCountElement =
-          cardElement.querySelector(".card__like-count");
-        likesCountElement.textContent = updatedCardData.likes.length;
-        cardElement.classList.remove("card__like-button_active");
-        return updatedCardData; // Ensure the updated card data is being returned
+        card.updateLikes(updatedCardData.likes);
+        return updatedCardData;
       })
       .catch((error) => {
         console.error(`Failed to remove like: ${error}`);
       });
   } else {
-    return api
-      .addLike(cardId)
+    api
+      .addLike(card._id)
       .then((updatedCardData) => {
-        const likesCountElement =
-          cardElement.querySelector(".card__like-count");
-        likesCountElement.textContent = updatedCardData.likes.length;
-        cardElement.classList.add("card__like-button_active");
-        return updatedCardData; // Ensure the updated card data is being returned
+        card.updateLikes(updatedCardData.likes);
+        return updatedCardData;
       })
       .catch((error) => {
         console.error(`Failed to add like: ${error}`);

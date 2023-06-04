@@ -4,140 +4,87 @@ export default class Card {
     cardTemplateSelector,
     openImageModal,
     handleCardLike,
-    handleCardUnlike,
     handleCardDelete,
     userId,
     cardList
   ) {
-    if (!cardData) {
-      throw new Error("Card data is not defined");
-    }
-
-    if (!cardData._id) {
-      throw new Error("Card id is not defined");
-    }
-
-    if (!handleCardLike || typeof handleCardLike !== "function") {
-      throw new Error("handleCardLike must be a function");
-    }
-
-    if (!handleCardUnlike || typeof handleCardUnlike !== "function") {
-      throw new Error("handleCardUnlike must be a function");
-    }
-
+    this._name = cardData.name;
+    this._link = cardData.link;
     this._id = cardData._id;
-    this._userId = userId;
-    this._cardData = cardData;
-    this._cardTemplateSelector = cardTemplateSelector;
-    this._openImageModal = () => openImageModal(this._cardData);
+    this._likes = cardData.likes;
+    this._cardSelector = cardTemplateSelector;
+    this._openImageModal = openImageModal;
     this._handleLike = handleCardLike;
-    this._handleUnlike = handleCardUnlike;
     this._handleDelete = handleCardDelete;
-    this._cardList = cardList; // Store the cardList reference
+    this._cardList = cardList;
+    this._userId = userId;
   }
 
-  isLiked() {
-    return this._cardData.likes.some((like) => like._id === this._userId);
+  _getTemplate() {
+    const cardElement = document
+      .querySelector(this._cardSelector)
+      .content.querySelector(".card")
+      .cloneNode(true);
+    return cardElement;
   }
 
-  _deleteCard = () => {
-    this._handleDelete(this._id);
-  };
-  _toggleLike = () => {
-    const isLiked = this.isLiked();
+  _setEventListeners() {
+    this._element
+      .querySelector(".card__like-button")
+      .addEventListener("click", () => {
+        this._handleLike(this);
+      });
 
-    if (isLiked) {
-      if (typeof this._handleUnlike === "function") {
-        this._handleUnlike(this._cardData._id)
-          .then((newCardData) => {
-            console.log("newCardData inside handleLike:", newCardData); // Add this line
-            this.updateLikes(newCardData.likes);
-          })
-          .catch((err) => console.error(err));
-      } else {
-        console.error(
-          `this._handleUnlike is not a function: ${this._handleUnlike}`
-        );
-      }
-    } else {
-      if (typeof this._handleLike === "function") {
-        this._handleLike(this._cardData._id)
-          .then((newCardData) => {
-            console.log("newCardData after like:", newCardData); // Add this line
-            this.updateLikes(newCardData.likes);
-          })
-          .catch((err) => console.error(err));
-      } else {
-        console.error(
-          `this._handleLike is not a function: ${this._handleLike}`
-        );
-      }
-    }
-  };
+    this._element
+      .querySelector(".card__image")
+      .addEventListener("click", () => {
+        this._openImageModal(this._cardData);
+      });
+
+    this._element
+      .querySelector(".card__delete-button")
+      .addEventListener("click", () => {
+        this._handleDelete(this._id);
+      });
+  }
+
+  deleteCard() {
+    this._element.remove();
+    this._element = null;
+  }
+
   updateLikes(likes) {
-    console.log("Likes before update:", this._cardData.likes); // Add this line
-    this._cardData.likes = likes;
-    console.log("Likes after update:", this._cardData.likes); // Add this line
+    this._likes = likes;
     this._renderLikes();
   }
 
   _renderLikes() {
-    if (!this._cardData.likes) {
-      throw new Error("Likes property is not defined on new card data");
-    }
-
-    console.log("Likes count before update:", this._likeCount.textContent); // Add this line
-    this._likeButton.classList.toggle(
-      "card__like-button_active",
-      this.isLiked()
-    );
-
-    this._likeCount.textContent = this._cardData.likes.length;
-    console.log("Likes count after update:", this._likeCount.textContent); // Add this line
+    this._element.querySelector(".card__like-count").textContent =
+      this._likes.length;
+    this._element
+      .querySelector(".card__like-button")
+      .classList.toggle("card__like-button_active", this.isLiked());
   }
 
-  _setEventListeners() {
-    this._likeButton.addEventListener("click", this._toggleLike);
-    this._cardImageEl.addEventListener("click", this._openImageModal);
-    this._deleteButton.addEventListener("click", this._deleteCard);
-  }
-
-  _getElement() {
-    const cardTemplate = document
-      .querySelector(this._cardTemplateSelector)
-      .content.querySelector(".card")
-      .cloneNode(true);
-    return cardTemplate;
+  isLiked() {
+    return this._likes.some((like) => like._id === this._userId);
   }
 
   generateCard() {
-    const cardElement = this._getElement();
-    cardElement.setAttribute("data-card-id", this._cardData._id);
-    this._cardElement = cardElement;
-    this._cardImageEl = this._cardElement.querySelector(".card__image");
-    this._cardTitleEl = this._cardElement.querySelector(".card__title");
-    this._likeButton = this._cardElement.querySelector(".card__like-button");
-    this._likeCount = this._cardElement.querySelector(".card__like-count");
-    this._deleteButton = this._cardElement.querySelector(
-      ".card__delete-button"
-    );
+    this._element = this._getTemplate();
+    this._element.querySelector(".card__title").textContent = this._name;
+    this._element.querySelector(".card__image").src = this._link;
+    this._element.querySelector(".card__image").alt = this._name;
 
-    this._cardImageEl.src = this._cardData.link;
-    this._cardImageEl.alt = this._cardData.name;
-    this._cardTitleEl.textContent = this._cardData.name;
-    this._likeCount.textContent = this._cardData.likes.length;
+    this._renderLikes();
 
-    this._renderLikes(); // Render initial likes
-    this._setEventListeners();
-
-    // Hide the delete button if the current user isn't the card's owner
-    if (this._cardData.owner._id !== this._userId) {
-      this._deleteButton.style.display = "none";
+    if (this._userId !== this._ownerId) {
+      this._element.querySelector(".card__delete-button").style.display =
+        "none";
     }
 
-    // Store the card instance on the card element
-    this._cardElement.cardInstance = this;
+    this._setEventListeners();
 
-    return this._cardElement;
+    return this._element;
   }
 }
