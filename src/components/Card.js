@@ -83,13 +83,10 @@ export default class Card {
     this._element.querySelector(".card__image").alt = this._name;
 
     this._renderLikes();
-
-    if (this._userId !== this._ownerId) {
-      this._element.querySelector(".card__delete-button").style.display =
-        "none";
-    }
-
     this._setEventListeners();
+    if (this._userId !== this._ownerId) {
+      this._element.querySelector(".card__delete-button").remove();
+    }
 
     return this._element;
   }

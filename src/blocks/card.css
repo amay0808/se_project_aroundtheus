@@ -71,7 +71,7 @@
   margin-left: 249px;
   margin-top: 18px;
   margin-right: 15px;
-  display: none;
+  /* display: none; */
   z-index: 1;
 }
 .card__delete-button--visible {
