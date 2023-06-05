@@ -68,7 +68,7 @@ api
     console.error(`Failed to get user info and initial cards: ${error}`);
   });
 
-// Profile Edit Form
+//Profile Edit Form
 function handleProfileEditSubmit(formData) {
   profileEditPopup.showLoading();
 

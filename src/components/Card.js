@@ -12,13 +12,19 @@ export default class Card {
     this._link = cardData.link;
     this._id = cardData._id;
     this._likes = cardData.likes;
+    this._ownerId = cardData.owner._id;
     this._cardSelector = cardTemplateSelector;
     this._openImageModal = openImageModal;
     this._handleLike = handleCardLike;
     this._handleDelete = handleCardDelete;
     this._cardList = cardList;
     this._userId = userId;
+
+    console.log(`Card owner's ID: ${this._ownerId}`);
+    console.log(`Current user's ID: ${this._userId}`);
   }
+
+  // The rest of your class...
 
   _getTemplate() {
     const cardElement = document
@@ -38,7 +44,7 @@ export default class Card {
     this._element
       .querySelector(".card__image")
       .addEventListener("click", () => {
-        this._openImageModal(this._cardData);
+        this._openImageModal({ name: this._name, link: this._link });
       });
 
     this._element
