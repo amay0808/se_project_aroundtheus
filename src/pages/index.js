@@ -280,24 +280,3 @@ addCardPopup.setEventListeners();
 // Image Popup Instance
 const imagePopup = new ImagePopup("#preview__image-modal");
 imagePopup.setEventListeners();
-
-// Card List
-api
-  .getInitialCards()
-  .then((cardData) => {
-    cardList = new Section(
-      {
-        items: cardData,
-        renderer: (cardData) => {
-          const cardElement = createCard(cardData, userId);
-          cardList.addItem(cardElement);
-        },
-      },
-      ".card__list"
-    );
-
-    cardList.renderItems();
-  })
-  .catch((error) => {
-    console.error(error);
-  });
