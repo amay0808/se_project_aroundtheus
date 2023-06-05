@@ -19,12 +19,7 @@ export default class Card {
     this._handleDelete = handleCardDelete;
     this._cardList = cardList;
     this._userId = userId;
-
-    console.log(`Card owner's ID: ${this._ownerId}`);
-    console.log(`Current user's ID: ${this._userId}`);
   }
-
-  // The rest of your class...
 
   _getTemplate() {
     const cardElement = document

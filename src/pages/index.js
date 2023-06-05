@@ -114,7 +114,9 @@ function handleAddCardFormSubmit(formData) {
     .addCard(formData.name, formData.link)
     .then((newCardData) => {
       if (newCardData && newCardData._id) {
-        const cardElement = createCard(newCardData);
+        const cardElement = createCard(newCardData, cardList);
+
+        // const cardElement = createCard(newCardData);
         cardList.addItem(cardElement);
         addCardPopup.close();
       } else {
