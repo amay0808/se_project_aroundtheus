@@ -12,15 +12,19 @@ class Section {
   }
 
   addItem(element) {
-    this._container.append(element);
+    this._container.prepend(element);
   }
-
   removeItem(itemId) {
-    const itemElement = this._container.querySelector(`[data-id="${itemId}"]`);
+    console.log(`Trying to remove item with id: ${itemId}`);
+    console.log(this._container.innerHTML);
+    const itemElement = this._container.querySelector(
+      `[data-card-id="${itemId}"]`
+    );
+    console.log(`Found item element: `, itemElement);
     if (itemElement) {
       itemElement.remove();
+      console.log(`Item with id: ${itemId} removed.`);
     }
   }
 }
-
 export default Section;

@@ -114,7 +114,7 @@ function handleAddCardFormSubmit(formData) {
     .addCard(formData.name, formData.link)
     .then((newCardData) => {
       if (newCardData && newCardData._id) {
-        const cardElement = createCard(newCardData, cardList);
+        const cardElement = createCard(newCardData, userId);
 
         // const cardElement = createCard(newCardData);
         cardList.addItem(cardElement);
@@ -130,12 +130,13 @@ function handleAddCardFormSubmit(formData) {
       addCardPopup.hideLoading();
     });
 }
-
 // Handle Card Delete
 function handleCardDelete(cardId) {
+  console.trace(`handleCardDelete called with ID: ${cardId}`);
   api
     .deleteCard(cardId)
     .then(() => {
+      console.log(`Deleted card with ID: ${cardId}`);
       cardList.removeItem(cardId);
     })
     .catch((error) => {
@@ -144,7 +145,7 @@ function handleCardDelete(cardId) {
 }
 
 function createCard(cardData, userId) {
-  console.log(cardData); // Log the cardData
+  console.log(`Creating card with ID: ${cardData._id}`); // Add this line
 
   const card = new Card(
     cardData,
@@ -276,6 +277,14 @@ const addCardPopup = new PopupWithForm(
   api
 );
 addCardPopup.setEventListeners();
+
+const deleteCardPopup = new PopupWithForm(
+  "#delete-modal",
+  handleCardDelete,
+  "saving...",
+  api
+);
+deleteCardPopup.setEventListeners();
 
 // Image Popup Instance
 const imagePopup = new ImagePopup("#preview__image-modal");

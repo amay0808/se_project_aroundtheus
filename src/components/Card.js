@@ -42,11 +42,11 @@ export default class Card {
         this._openImageModal({ name: this._name, link: this._link });
       });
 
-    this._element
-      .querySelector(".card__delete-button")
-      .addEventListener("click", () => {
-        this._handleDelete(this._id);
-      });
+    const deleteButton = this._element.querySelector(".card__delete-button");
+    deleteButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      this._handleDelete(this._id);
+    });
   }
 
   deleteCard() {

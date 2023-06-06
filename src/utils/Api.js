@@ -8,7 +8,7 @@ class Api {
     if (res.ok) {
       return res.json(); // Make sure it's returning the response body as JSON
     }
-    return Promise.reject(`Error: ${res.status}`);
+    // return Promise.reject(`Error: ${res.status}`);
   }
 
   _handleError(error) {
@@ -62,7 +62,12 @@ class Api {
       .then(this._checkResponse)
       .catch(this._handleError);
   }
+
   addLike(cardId) {
+    // Log values before making the request
+    console.log(`Base URL: ${this._baseUrl}`);
+    console.log(`Card ID: ${cardId}`);
+    console.log("Headers:", this._headers);
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
