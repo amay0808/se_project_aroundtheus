@@ -41,14 +41,12 @@ export default class Card {
       .addEventListener("click", () => {
         this._openImageModal({ name: this._name, link: this._link });
       });
-
     const deleteButton = this._element.querySelector(".card__delete-button");
     deleteButton.addEventListener("click", (event) => {
       event.preventDefault();
       this._handleDelete(this._id);
     });
   }
-
   deleteCard() {
     this._element.remove();
     this._element = null;

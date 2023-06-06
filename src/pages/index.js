@@ -133,6 +133,10 @@ function handleAddCardFormSubmit(formData) {
 // Handle Card Delete
 function handleCardDelete(cardId) {
   console.trace(`handleCardDelete called with ID: ${cardId}`);
+  console.log(cardId.cardId);
+
+  // Open the confirmation popup before deleting the card
+  // deleteCardPopup.open(cardId);
   api
     .deleteCard(cardId)
     .then(() => {
