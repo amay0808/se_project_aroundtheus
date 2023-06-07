@@ -12,16 +12,20 @@ export default class PopupWithForm extends Popup {
     this._loadingButtonText = loadingButtonText;
     this._api = api;
   }
+
   renderLoading(isLoading) {
-    console.log("renderLoading called with: ", isLoading);
+    console.log(
+      `PopupWithForm renderLoading called with: ${isLoading}. Caller: ${
+        new Error().stack
+      }`
+    );
     if (isLoading) {
       this._submitButton.textContent = this._loadingButtonText;
     } else {
       this._submitButton.textContent = this._buttonText;
     }
     console.log(
-      "Button text after renderLoading: ",
-      this._submitButton.textContent
+      `Button text after renderLoading:  ${this._submitButton.textContent}`
     );
   }
 
@@ -45,6 +49,7 @@ export default class PopupWithForm extends Popup {
       const inputValues = this._getInputValues();
       Promise.resolve(this._handleSubmit(inputValues, this._api))
         .then(() => {
+          console.log("handleProfileEditSubmit: about to close the popup");
           this.close();
         })
         .catch((error) => {
@@ -54,10 +59,5 @@ export default class PopupWithForm extends Popup {
           this.renderLoading(false);
         });
     });
-  }
-
-  close() {
-    super.close();
-    this._formElement.reset();
   }
 }

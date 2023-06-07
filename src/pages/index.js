@@ -71,8 +71,9 @@ api
 
 //Profile Edit Form
 function handleProfileEditSubmit(formData) {
+  console.log("handleProfileEditSubmit event:", formData);
   console.log("handleProfileEditSubmit starts");
-  profileEditPopup.renderLoading(true);
+  // profileEditPopup.renderLoading(true);
 
   const nameInput = profileTitleInput;
   const jobInput = profileDescriptionInput;
@@ -81,13 +82,14 @@ function handleProfileEditSubmit(formData) {
     .editProfile(nameInput.value, jobInput.value)
     .then((updatedInfo) => {
       userInfo.setUserInfo(updatedInfo.name, updatedInfo.about);
+      console.log("handleProfileEditSubmit: about to close the popup");
       profileEditPopup.close();
     })
     .catch((error) => {
       console.error(error);
     })
     .finally(() => {
-      profileEditPopup.renderLoading(false);
+      // profileEditPopup.renderLoading(false);
       console.log("handleProfileEditSubmit ends");
     });
 }
@@ -95,7 +97,7 @@ function handleProfileEditSubmit(formData) {
 // Avatar Form
 function handleAvatarFormSubmit(formData) {
   console.log("handleProfileEditSubmit starts");
-  avatarPopup.renderLoading(true);
+  // avatarPopup.renderLoading(true);
 
   api
     .updateAvatar(formData.avatar)
@@ -107,7 +109,7 @@ function handleAvatarFormSubmit(formData) {
       console.error(`Failed to update avatar: ${error}`);
     })
     .finally(() => {
-      avatarPopup.renderLoading(false);
+      // avatarPopup.renderLoading(false);
       console.log("handleProfileEditSubmit ends");
     });
 }
@@ -115,7 +117,7 @@ function handleAvatarFormSubmit(formData) {
 // Add Card Form
 function handleAddCardFormSubmit(formData) {
   console.log("handleProfileEditSubmit starts");
-  addCardPopup.renderLoading(true);
+  // addCardPopup.renderLoading(true);
   api
     .addCard(formData.name, formData.link)
     .then((newCardData) => {
@@ -133,7 +135,7 @@ function handleAddCardFormSubmit(formData) {
       console.error(`Failed to add card: ${error}`);
     })
     .finally(() => {
-      addCardPopup.renderLoading(false);
+      // addCardPopup.renderLoading(false);
       console.log("handleProfileEditSubmit ends");
     });
 }
