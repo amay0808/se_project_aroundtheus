@@ -6,6 +6,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import ImagePopup from "../components/ImagePopup.js";
 import "../pages/index.css";
+import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
 // DOM Elements
 const avatarImageElement = document.querySelector(".profile__avatar");
@@ -136,16 +137,18 @@ function handleCardDelete(cardId) {
   console.log(cardId.cardId);
 
   // Open the confirmation popup before deleting the card
-  // deleteCardPopup.open(cardId);
-  api
-    .deleteCard(cardId)
-    .then(() => {
-      console.log(`Deleted card with ID: ${cardId}`);
-      cardList.removeItem(cardId);
-    })
-    .catch((error) => {
-      console.error(`Failed to delete card: ${error}`);
-    });
+  deleteCardPopup.open(cardId);
+  deleteCardPopup.setConfirmHandler(() => {
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        console.log(`Deleted card with ID: ${cardId}`);
+        cardList.removeItem(cardId);
+      })
+      .catch((error) => {
+        console.error(`Failed to delete card: ${error}`);
+      });
+  });
 }
 
 function createCard(cardData, userId) {
@@ -282,12 +285,8 @@ const addCardPopup = new PopupWithForm(
 );
 addCardPopup.setEventListeners();
 
-const deleteCardPopup = new PopupWithForm(
-  "#delete-modal",
-  handleCardDelete,
-  "saving...",
-  api
-);
+const deleteCardPopup = new PopupWithConfirmation("#delete-modal");
+
 deleteCardPopup.setEventListeners();
 
 // Image Popup Instance
