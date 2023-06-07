@@ -69,8 +69,13 @@ export default class Card {
     return this._likes.some((like) => like._id === this._userId);
   }
 
+  getId() {
+    return this._id;
+  }
+
   generateCard() {
     this._element = this._getTemplate();
+    this._element.setAttribute("data-id", this._id);
     this._element.querySelector(".card__title").textContent = this._name;
     this._element.querySelector(".card__image").src = this._link;
     this._element.querySelector(".card__image").alt = this._name;

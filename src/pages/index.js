@@ -142,16 +142,17 @@ function handleAddCardFormSubmit(formData) {
 // Handle Card Delete
 function handleCardDelete(cardId) {
   console.trace(`handleCardDelete called with ID: ${cardId}`);
-  console.log(cardId.cardId);
+  console.log("cardId", cardId);
 
   // Open the confirmation popup before deleting the card
   deleteCardPopup.open(cardId);
   deleteCardPopup.setConfirmHandler(() => {
+    console.log("test");
     api
       .deleteCard(cardId)
       .then(() => {
         console.log(`Deleted card with ID: ${cardId}`);
-        cardList.removeItem(cardId);
+        cardList.removeItem(card);
       })
       .catch((error) => {
         console.error(`Failed to delete card: ${error}`);
@@ -160,7 +161,7 @@ function handleCardDelete(cardId) {
 }
 
 function createCard(cardData, userId) {
-  console.log(`Creating card with ID: ${cardData._id}`); // Add this line
+  // console.log(`Creating card with ID: ${cardData._id}`); // Add this line
 
   const card = new Card(
     cardData,
