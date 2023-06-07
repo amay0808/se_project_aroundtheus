@@ -71,7 +71,8 @@ api
 
 //Profile Edit Form
 function handleProfileEditSubmit(formData) {
-  profileEditPopup.showLoading();
+  console.log("handleProfileEditSubmit starts");
+  profileEditPopup.renderLoading(true);
 
   const nameInput = profileTitleInput;
   const jobInput = profileDescriptionInput;
@@ -86,13 +87,15 @@ function handleProfileEditSubmit(formData) {
       console.error(error);
     })
     .finally(() => {
-      profileEditPopup.hideLoading();
+      profileEditPopup.renderLoading(false);
+      console.log("handleProfileEditSubmit ends");
     });
 }
 
 // Avatar Form
 function handleAvatarFormSubmit(formData) {
-  avatarPopup.showLoading();
+  console.log("handleProfileEditSubmit starts");
+  avatarPopup.renderLoading(true);
 
   api
     .updateAvatar(formData.avatar)
@@ -104,13 +107,15 @@ function handleAvatarFormSubmit(formData) {
       console.error(`Failed to update avatar: ${error}`);
     })
     .finally(() => {
-      avatarPopup.hideLoading();
+      avatarPopup.renderLoading(false);
+      console.log("handleProfileEditSubmit ends");
     });
 }
 
 // Add Card Form
 function handleAddCardFormSubmit(formData) {
-  addCardPopup.showLoading();
+  console.log("handleProfileEditSubmit starts");
+  addCardPopup.renderLoading(true);
   api
     .addCard(formData.name, formData.link)
     .then((newCardData) => {
@@ -128,7 +133,8 @@ function handleAddCardFormSubmit(formData) {
       console.error(`Failed to add card: ${error}`);
     })
     .finally(() => {
-      addCardPopup.hideLoading();
+      addCardPopup.renderLoading(false);
+      console.log("handleProfileEditSubmit ends");
     });
 }
 // Handle Card Delete
@@ -237,27 +243,27 @@ const addCardFormValidator = new FormValidator(
 );
 addCardFormValidator.enableValidation();
 
-// Enable/disable submit button for Edit Profile modal
-const profileEditSubmitButton = document.querySelector(
-  "#edit-profile-save-button"
-);
-profileEditSubmitButton.disabled = true;
+// // Enable/disable submit button for Edit Profile modal
+// const profileEditSubmitButton = document.querySelector(
+//   "#edit-profile-save-button"
+// );
+// profileEditSubmitButton.disabled = true;
 
-const profileEditInputs = document.querySelectorAll(
-  "#profile-edit-modal .modal__input"
-);
-profileEditInputs.forEach((input) => {
-  input.addEventListener("input", () => {
-    if (
-      profileTitleInput.value.trim() !== "" &&
-      profileDescriptionInput.value.trim() !== ""
-    ) {
-      profileEditSubmitButton.disabled = false;
-    } else {
-      profileEditSubmitButton.disabled = true;
-    }
-  });
-});
+// const profileEditInputs = document.querySelectorAll(
+//   "#profile-edit-modal .modal__input"
+// );
+// profileEditInputs.forEach((input) => {
+//   input.addEventListener("input", () => {
+//     if (
+//       profileTitleInput.value.trim() !== "" &&
+//       profileDescriptionInput.value.trim() !== ""
+//     ) {
+//       profileEditSubmitButton.disabled = false;
+//     } else {
+//       profileEditSubmitButton.disabled = true;
+//     }
+//   });
+// });
 
 // Popup Instances
 const avatarPopup = new PopupWithForm(

@@ -1,6 +1,6 @@
-import PopupWithConfirmation from "./PopupWithConfirmation.js";
+import Popup from "./Popup.js";
 
-export default class PopupWithForm extends PopupWithConfirmation {
+export default class PopupWithForm extends Popup {
   constructor(popupSelector, handleSubmit, loadingButtonText, api) {
     super(popupSelector);
     this._handleSubmit = handleSubmit;
@@ -12,13 +12,17 @@ export default class PopupWithForm extends PopupWithConfirmation {
     this._loadingButtonText = loadingButtonText;
     this._api = api;
   }
-
-  showLoading() {
-    this._submitButton.textContent = this._loadingButtonText;
-  }
-
-  hideLoading() {
-    this._submitButton.textContent = this._buttonText;
+  renderLoading(isLoading) {
+    console.log("renderLoading called with: ", isLoading);
+    if (isLoading) {
+      this._submitButton.textContent = this._loadingButtonText;
+    } else {
+      this._submitButton.textContent = this._buttonText;
+    }
+    console.log(
+      "Button text after renderLoading: ",
+      this._submitButton.textContent
+    );
   }
 
   _getInputValues() {
@@ -35,8 +39,8 @@ export default class PopupWithForm extends PopupWithConfirmation {
 
     this._formElement.addEventListener("submit", (e) => {
       e.preventDefault();
-
-      this.showLoading();
+      console.log("Form submit event triggered");
+      this.renderLoading(true);
 
       const inputValues = this._getInputValues();
       Promise.resolve(this._handleSubmit(inputValues, this._api))
@@ -47,8 +51,13 @@ export default class PopupWithForm extends PopupWithConfirmation {
           console.error(error);
         })
         .finally(() => {
-          this.hideLoading();
+          this.renderLoading(false);
         });
     });
+  }
+
+  close() {
+    super.close();
+    this._formElement.reset();
   }
 }

@@ -19,11 +19,15 @@ export default class PopupWithConfirmation extends Popup {
   }
 
   renderLoading(isLoading) {
-    // Change the confirmation button text depending on whether loading is happening
+    console.log("renderLoading called with: ", isLoading);
     if (isLoading) {
-      this._confirmButton.textContent = "Saving...";
+      this._submitButton.textContent = this._loadingButtonText;
     } else {
-      this._confirmButton.textContent = this._confirmButtonText;
+      this._submitButton.textContent = this._buttonText;
     }
+    console.log(
+      "Button text after renderLoading: ",
+      this._submitButton.textContent
+    );
   }
 }
