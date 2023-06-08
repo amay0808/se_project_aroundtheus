@@ -71,9 +71,7 @@ api
 
 //Profile Edit Form
 function handleProfileEditSubmit(formData) {
-  console.log("handleProfileEditSubmit event:", formData);
-  console.log("handleProfileEditSubmit starts");
-  // profileEditPopup.renderLoading(true);
+  profileEditPopup.renderLoading(true);
 
   const nameInput = profileTitleInput;
   const jobInput = profileDescriptionInput;
@@ -84,40 +82,32 @@ function handleProfileEditSubmit(formData) {
       userInfo.setUserInfo(updatedInfo.name, updatedInfo.about);
       console.log("handleProfileEditSubmit: about to close the popup");
       profileEditPopup.close();
+      profileEditPopup.renderLoading(false);
     })
     .catch((error) => {
       console.error(error);
     })
-    .finally(() => {
-      // profileEditPopup.renderLoading(false);
-      console.log("handleProfileEditSubmit ends");
-    });
+    .finally(() => {});
 }
 
 // Avatar Form
 function handleAvatarFormSubmit(formData) {
-  console.log("handleProfileEditSubmit starts");
-  // avatarPopup.renderLoading(true);
+  avatarPopup.renderLoading(true);
 
   api
     .updateAvatar(formData.avatar)
     .then(() => {
       userInfo.setAvatar(formData.avatar);
       avatarPopup.close();
+      avatarPopup.renderLoading(false);
     })
-    .catch((error) => {
-      console.error(`Failed to update avatar: ${error}`);
-    })
-    .finally(() => {
-      // avatarPopup.renderLoading(false);
-      console.log("handleProfileEditSubmit ends");
-    });
+    .catch((error) => {})
+    .finally(() => {});
 }
 
 // Add Card Form
 function handleAddCardFormSubmit(formData) {
-  console.log("handleProfileEditSubmit starts");
-  // addCardPopup.renderLoading(true);
+  addCardPopup.renderLoading(true);
   api
     .addCard(formData.name, formData.link)
     .then((newCardData) => {
@@ -127,6 +117,7 @@ function handleAddCardFormSubmit(formData) {
         // const cardElement = createCard(newCardData);
         cardList.addItem(cardElement);
         addCardPopup.close();
+        addCardPopup.renderLoading(false);
       } else {
         throw new Error("Invalid card data received from the server");
       }
@@ -135,7 +126,6 @@ function handleAddCardFormSubmit(formData) {
       console.error(`Failed to add card: ${error}`);
     })
     .finally(() => {
-      // addCardPopup.renderLoading(false);
       console.log("handleProfileEditSubmit ends");
     });
 }
