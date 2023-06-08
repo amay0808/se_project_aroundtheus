@@ -15,7 +15,7 @@ export default class PopupWithConfirmation extends Popup {
   close() {
     super.close();
     this._confirmButton.removeEventListener("click", this._confirmHandler);
-    this.renderLoading(false); // Reset loading state when closing the popup
+    // this.renderLoading(false); // Reset loading state when closing the popup
   }
 
   renderLoading(isLoading) {
