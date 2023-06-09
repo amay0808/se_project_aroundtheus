@@ -85,12 +85,13 @@ function handleProfileEditSubmit(formData) {
         userInfo.getAvatar()
       );
       profileEditPopup.close();
-      profileEditPopup.renderLoading(false);
     })
     .catch((error) => {
       console.error(error);
     })
-    .finally(() => {});
+    .finally(() => {
+      profileEditPopup.renderLoading(false); // Moved renderLoading(false) into finally block
+    });
 }
 
 // Avatar Form
@@ -244,7 +245,7 @@ const avatarPopup = new PopupWithForm(
   "#edit-avatar-modal",
   handleAvatarFormSubmit,
   "Saving...",
-  api
+  ""
 );
 avatarPopup.setEventListeners();
 
@@ -252,7 +253,7 @@ const profileEditPopup = new PopupWithForm(
   "#profile-edit-modal",
   handleProfileEditSubmit,
   "Saving...",
-  api
+  ""
 );
 profileEditPopup.setEventListeners();
 
@@ -261,7 +262,7 @@ const addCardPopup = new PopupWithForm(
   "#add-modal",
   handleAddCardFormSubmit,
   "Saving...",
-  api
+  ""
 );
 addCardPopup.setEventListeners();
 
