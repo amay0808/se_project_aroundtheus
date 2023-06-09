@@ -203,6 +203,7 @@ profileEditButton.addEventListener("click", () => {
   const profileInfo = userInfo.getUserInfo();
   profileTitleInput.value = profileInfo.name;
   profileDescriptionInput.value = profileInfo.job;
+  profileEditFormValidator.resetValidation();
   profileEditPopup.open();
 });
 
@@ -235,28 +236,6 @@ const addCardFormValidator = new FormValidator(
   document.querySelector("#add-modal form")
 );
 addCardFormValidator.enableValidation();
-
-// // Enable/disable submit button for Edit Profile modal
-// const profileEditSubmitButton = document.querySelector(
-//   "#edit-profile-save-button"
-// );
-// profileEditSubmitButton.disabled = true;
-
-// const profileEditInputs = document.querySelectorAll(
-//   "#profile-edit-modal .modal__input"
-// );
-// profileEditInputs.forEach((input) => {
-//   input.addEventListener("input", () => {
-//     if (
-//       profileTitleInput.value.trim() !== "" &&
-//       profileDescriptionInput.value.trim() !== ""
-//     ) {
-//       profileEditSubmitButton.disabled = false;
-//     } else {
-//       profileEditSubmitButton.disabled = true;
-//     }
-//   });
-// });
 
 // Popup Instances
 const avatarPopup = new PopupWithForm(
