@@ -5,11 +5,15 @@ export default class PopupWithConfirmation extends Popup {
     super(popupSelector);
     this._confirmButton = this._popupElement.querySelector(".modal__close");
     this._confirmButtonText = this._confirmButton.textContent;
+    this._confirmDeleteButton = this._popupElement.querySelector(
+      ".modal__delete-button"
+    );
   }
 
   setConfirmHandler(handler) {
     this._confirmHandler = handler;
     this._confirmButton.addEventListener("click", this._confirmHandler);
+    this._confirmDeleteButton.addEventListener("click", this._confirmHandler);
   }
 
   close() {

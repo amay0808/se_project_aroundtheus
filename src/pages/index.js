@@ -79,8 +79,11 @@ function handleProfileEditSubmit(formData) {
   api
     .editProfile(nameInput.value, jobInput.value)
     .then((updatedInfo) => {
-      userInfo.setUserInfo(updatedInfo.name, updatedInfo.about);
-      console.log("handleProfileEditSubmit: about to close the popup");
+      userInfo.setUserInfo(
+        updatedInfo.name,
+        updatedInfo.about,
+        userInfo.getAvatar()
+      );
       profileEditPopup.close();
       profileEditPopup.renderLoading(false);
     })
@@ -125,9 +128,7 @@ function handleAddCardFormSubmit(formData) {
     .catch((error) => {
       console.error(`Failed to add card: ${error}`);
     })
-    .finally(() => {
-      console.log("handleProfileEditSubmit ends");
-    });
+    .finally(() => {});
 }
 // Handle Card Delete
 function handleCardDelete(cardId) {
@@ -137,12 +138,12 @@ function handleCardDelete(cardId) {
   // Open the confirmation popup before deleting the card
   deleteCardPopup.open(cardId);
   deleteCardPopup.setConfirmHandler(() => {
-    console.log("test");
     api
       .deleteCard(cardId)
       .then(() => {
         console.log(`Deleted card with ID: ${cardId}`);
-        cardList.removeItem(card);
+        cardList.removeItem(cardId);
+        deleteCardPopup.close();
       })
       .catch((error) => {
         console.error(`Failed to delete card: ${error}`);
@@ -236,6 +237,10 @@ const addCardFormValidator = new FormValidator(
   document.querySelector("#add-modal form")
 );
 addCardFormValidator.enableValidation();
+
+const deleteForm = document.querySelector("#delete-modal");
+const deleteCardFormValidator = new FormValidator(formConfig, deleteForm);
+deleteCardFormValidator.enableValidation();
 
 // Popup Instances
 const avatarPopup = new PopupWithForm(
