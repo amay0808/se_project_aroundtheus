@@ -1,13 +1,18 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithConfirmation extends Popup {
-  constructor(popupSelector) {
+  constructor(popupSelector, loadingButtonText = "Saving...") {
     super(popupSelector);
     this._confirmButton = this._popupElement.querySelector(".modal__close");
     this._confirmButtonText = this._confirmButton.textContent;
     this._confirmDeleteButton = this._popupElement.querySelector(
       ".modal__delete-button"
     );
+    this._submitButton = this._popupElement.querySelector(
+      ".modal__delete-button"
+    ); // Assuming the submit button is the delete button
+    this._buttonText = this._submitButton.textContent;
+    this._loadingButtonText = loadingButtonText;
   }
 
   setConfirmHandler(handler) {

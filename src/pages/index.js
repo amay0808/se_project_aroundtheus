@@ -137,7 +137,11 @@ function handleCardDelete(cardId) {
 
   // Open the confirmation popup before deleting the card
   deleteCardPopup.open(cardId);
+
   deleteCardPopup.setConfirmHandler(() => {
+    // Show loading
+    deleteCardPopup.renderLoading(true);
+
     api
       .deleteCard(cardId)
       .then(() => {
@@ -147,6 +151,10 @@ function handleCardDelete(cardId) {
       })
       .catch((error) => {
         console.error(`Failed to delete card: ${error}`);
+      })
+      .finally(() => {
+        // Hide loading
+        deleteCardPopup.renderLoading(false);
       });
   });
 }
