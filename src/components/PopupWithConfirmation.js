@@ -10,7 +10,7 @@ export default class PopupWithConfirmation extends Popup {
     );
     this._submitButton = this._popupElement.querySelector(
       ".modal__delete-button"
-    ); // Assuming the submit button is the delete button
+    );
     this._buttonText = this._submitButton.textContent;
     this._loadingButtonText = loadingButtonText;
   }
