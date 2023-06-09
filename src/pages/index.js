@@ -35,7 +35,7 @@ const addModalCreateButton = document.getElementById(
 // Instance of the UserInfo class
 let userId;
 let userInfo;
-let cardList; // Declare cardList outside of the scope
+let cardList;
 
 // Initialize API and retrieve user info and initial cards
 api
@@ -117,7 +117,6 @@ function handleAddCardFormSubmit(formData) {
       if (newCardData && newCardData._id) {
         const cardElement = createCard(newCardData, userId);
 
-        // const cardElement = createCard(newCardData);
         cardList.addItem(cardElement);
         addCardPopup.close();
         addCardPopup.renderLoading(false);
@@ -152,8 +151,6 @@ function handleCardDelete(cardId) {
 }
 
 function createCard(cardData, userId) {
-  // console.log(`Creating card with ID: ${cardData._id}`); // Add this line
-
   const card = new Card(
     cardData,
     "#card-template",

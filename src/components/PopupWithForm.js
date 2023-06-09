@@ -1,7 +1,7 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-  constructor(popupSelector, handleSubmit, loadingButtonText, api) {
+  constructor(popupSelector, handleSubmit, loadingButtonText) {
     super(popupSelector);
     this._handleSubmit = handleSubmit;
     this._formElement = this._popupElement.querySelector("form");
@@ -10,7 +10,11 @@ export default class PopupWithForm extends Popup {
     );
     this._buttonText = this._submitButton.textContent;
     this._loadingButtonText = loadingButtonText;
-    this._api = api;
+  }
+
+  close() {
+    super.close();
+    this._formElement.reset(); // resets the form inputs
   }
 
   renderLoading(isLoading) {
