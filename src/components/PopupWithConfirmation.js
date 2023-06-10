@@ -17,13 +17,23 @@ export default class PopupWithConfirmation extends Popup {
 
   setConfirmHandler(handler) {
     this._confirmHandler = handler;
-    this._confirmButton.addEventListener("click", this._confirmHandler);
-    this._confirmDeleteButton.addEventListener("click", this._confirmHandler);
+    this._confirmButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      this._confirmHandler();
+    });
+    this._confirmDeleteButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      this._confirmHandler();
+    });
   }
 
   close() {
     super.close();
     this._confirmButton.removeEventListener("click", this._confirmHandler);
+    this._confirmDeleteButton.removeEventListener(
+      "click",
+      this._confirmHandler
+    );
   }
 
   renderLoading(isLoading) {

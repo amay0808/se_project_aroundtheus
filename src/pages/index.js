@@ -256,10 +256,6 @@ const addCardFormValidator = new FormValidator(
 );
 addCardFormValidator.enableValidation();
 
-// const deleteForm = document.querySelector("#delete-modal");
-// // const deleteCardFormValidator = new FormValidator(formConfig, deleteForm);
-// deleteCardForm.enableValidation();
-
 // Popup Instances
 const avatarPopup = new PopupWithForm(
   "#edit-avatar-modal",
