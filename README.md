@@ -17,9 +17,10 @@ This project was built using:
 
 - HTML
 - CSS
+- JavaScript
 
 ### Screenshots
 
-![Screenshot of Around The U.S. on Desktop](./images/Screenshot%202023-02-22%20at%2012.47.41%20AM.png)
+![Screenshot of Around The U.S. on Desktop](/src/images/aroundTheUs.png)
 
-- [https://amay0808.github.io/se_project_aroundtheus/]
+Check out the project here: [https://amay0808.github.io/se_project_aroundtheus/]
