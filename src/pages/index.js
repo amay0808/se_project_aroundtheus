@@ -125,12 +125,9 @@ function handleAddCardFormSubmit(formData) {
     .then((newCardData) => {
       if (newCardData && newCardData._id) {
         const cardElement = createCard(newCardData, userId);
-
         cardList.addItem(cardElement);
 
         addCardPopup.close();
-
-        addCardPopup.renderLoading(false);
       } else {
         throw new Error("Invalid card data received from the server");
       }
@@ -140,8 +137,11 @@ function handleAddCardFormSubmit(formData) {
       console.error(`Failed to add card: ${error}`);
     })
 
-    .finally(() => {});
+    .finally(() => {
+      addCardPopup.renderLoading(false);
+    });
 }
+
 // Handle Card Delete
 function handleCardDelete(cardId) {
   console.trace(`handleCardDelete called with ID: ${cardId}`);
