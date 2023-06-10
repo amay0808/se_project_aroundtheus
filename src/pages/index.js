@@ -103,31 +103,43 @@ function handleAvatarFormSubmit(formData) {
     .then(() => {
       userInfo.setAvatar(formData.avatar);
       avatarPopup.close();
-      avatarPopup.renderLoading(false);
     })
-    .catch((error) => {})
-    .finally(() => {});
+    .catch((error) => {
+      // Handle your error appropriately here
+      console.error(error);
+    })
+    .finally(() => {
+      avatarPopup.renderLoading(false);
+    });
 }
 
 // Add Card Form
+
 function handleAddCardFormSubmit(formData) {
   addCardPopup.renderLoading(true);
+
   api
+
     .addCard(formData.name, formData.link)
+
     .then((newCardData) => {
       if (newCardData && newCardData._id) {
         const cardElement = createCard(newCardData, userId);
 
         cardList.addItem(cardElement);
+
         addCardPopup.close();
+
         addCardPopup.renderLoading(false);
       } else {
         throw new Error("Invalid card data received from the server");
       }
     })
+
     .catch((error) => {
       console.error(`Failed to add card: ${error}`);
     })
+
     .finally(() => {});
 }
 // Handle Card Delete
@@ -244,24 +256,22 @@ const addCardFormValidator = new FormValidator(
 );
 addCardFormValidator.enableValidation();
 
-const deleteForm = document.querySelector("#delete-modal");
-const deleteCardFormValidator = new FormValidator(formConfig, deleteForm);
-deleteCardFormValidator.enableValidation();
+// const deleteForm = document.querySelector("#delete-modal");
+// // const deleteCardFormValidator = new FormValidator(formConfig, deleteForm);
+// deleteCardForm.enableValidation();
 
 // Popup Instances
 const avatarPopup = new PopupWithForm(
   "#edit-avatar-modal",
   handleAvatarFormSubmit,
-  "Saving...",
-  ""
+  "Saving..."
 );
 avatarPopup.setEventListeners();
 
 const profileEditPopup = new PopupWithForm(
   "#profile-edit-modal",
   handleProfileEditSubmit,
-  "Saving...",
-  ""
+  "Saving..."
 );
 profileEditPopup.setEventListeners();
 
@@ -269,8 +279,7 @@ profileEditPopup.setEventListeners();
 const addCardPopup = new PopupWithForm(
   "#add-modal",
   handleAddCardFormSubmit,
-  "Saving...",
-  ""
+  "Saving..."
 );
 addCardPopup.setEventListeners();
 
