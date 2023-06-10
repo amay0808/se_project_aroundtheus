@@ -22,5 +22,3 @@ This project was built using:
 ### Screenshots
 
 ![Screenshot of Around The U.S. on Desktop](/src/images/aroundTheUs.png)
-
-Check out the project here: [https://amay0808.github.io/se_project_aroundtheus/]
