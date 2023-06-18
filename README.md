@@ -4,6 +4,8 @@
 
 Around The U.S. is a web application that allows users to create a virtual scrapbook of their travels throughout the United States. With responsive design that ensures optimal viewing on any device, users can add and remove photos, like photos of other users, and make a few minor adjustments to their own profile.
 
+Check out live demo here: https://amay0808.github.io/se_project_aroundtheus/
+
 ### Features
 
 - Add and remove photos from your virtual scrapbook
